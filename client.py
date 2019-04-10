@@ -2,7 +2,7 @@ import http.client
 import json
 
 # -- API information + method + port
-HOSTNAME = "rest.ensembl.org"
+HOSTNAME = "localhost"
 METHOD = "GET"
 PORT = 8000
 
@@ -28,9 +28,11 @@ headers = {'User-Agent': 'http-client'}
 # -- will be used
 conn = http.client.HTTPSConnection(HOSTNAME)
 
+ENDPOINT = '/listSpecies?limit=&json=1'
+
 # -- Send the request. No body (None)
 # -- Use the defined headers
-conn.request(METHOD,/listSpecies?limit=10, None, headers)
+conn.request(METHOD,ENDPOINT, None, headers)
 
 # -- Wait for the server's response
 r1 = conn.getresponse()
@@ -43,7 +45,7 @@ print(r1.status, r1.reason)
 # -- Read the response's body and close
 # -- the connection
 text_json = r1.read().decode("utf-8")
-conn.close()
+
 
 parameters = self.convert_dict(self.path)
 limit = parameters['limit']
@@ -69,4 +71,8 @@ for one in list_of_species:
     if int(count) == int(limit):
         break
 
-print(List)
+Dict = {}
+Dict['List_of_species'] = List
+
+contents = json.dumps(Dict)
+print(contents)
