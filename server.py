@@ -3,6 +3,7 @@ import termcolor
 import http.server
 import http.client
 import json
+
 from Seq import Seq
 
 # Define the server's port and hostname
@@ -37,7 +38,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # Selecting type
 
         if self.path == '/':
-            json = 0
+            jsonvalue = 0
             contents = 'index.html'
             with open(contents, 'r') as a:
                 contents = a.read()
@@ -45,7 +46,6 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         elif '/listSpecies?limit' in self.path:
             parameters = self.convert_dict(self.path)
-            print(parameters)
 
             try:
                 limit = parameters['limit']
@@ -99,6 +99,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 list_of_species = list1['species']
                 limit = len(list_of_species)
 
+            if limit == '':
+                limit = len(list_of_species)
+            else:
+                limit = limit
+
             count = 0
             List = []
 
@@ -113,11 +118,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             Dict = {}
             Dict['List_of_species'] = List
 
-            if 'json=1' in parameters:
-                json = 1
+            if 'json=1' in self.path:
+                jsonvalue = 1
                 contents = json.dumps(Dict)
             else:
-                json=0
+                jsonvalue = 0
 
                 if int(limit) <= len(list_of_species):
 
@@ -147,18 +152,18 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                                           <body style="background-color: green;">
                                             <h1>List of all species</h1>
                                                     <ul>"""
-                    count = 0
-                    for one in list_of_species:
-                        contents = contents + '<li>' + one['name'] + '</li>'
-                        count = count + 1
+                count = 0
+                for one in list_of_species:
+                    contents = contents + '<li>' + one['name'] + '</li>'
+                    count = count + 1
 
-                        if int(count) == int(limit):
-                            break
-                    contents = contents + """
-                                                    </ul>
-                                                    </body>
-                                                    </html>
-                                                    """
+                    if int(count) == int(limit):
+                        break
+                contents = contents + """
+                                                </ul>
+                                                </body>
+                                                </html>
+                                                """
 
         elif '/karyotype' in self.path:
             parameters = self.convert_dict(self.path)
@@ -184,11 +189,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 karyotype_specie = {}
                 karyotype_specie['karyotype'] = response['karyotype']
 
-                if 'json=1' in parameters:
-                    json=1
+                if 'json=1' in self.path:
+                    jsonvalue = 1
                     contents = json.dumps(karyotype_specie)
                 else:
-                    json=0
+                    jsonvalue = 0
 
                     contents = """
                                 <html>
@@ -236,11 +241,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             data1 = r1.read().decode('utf-8')
             response = json.loads(data1)
 
-            if 'json=1' in parameters:
-                json=1
+            if 'json=1' in self.path:
+                jsonvalue = 1
                 contents = json.dumps(parameter)
             else:
-                json=0
+                jsonvalue = 0
 
                 try:
 
@@ -273,8 +278,10 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             gene_name = parameters['gene']
 
-            conn = http.client.HTTPConnection(HOSTNAME, PORT)
-            conn.request("GET", "/homology/symbol/human/" + gene_name + "?content-type=application/json")
+            ENDPOINT = "/homology/symbol/human/"+gene_name+"?content-type=application/json"
+            headers = {'User-Agent': 'http-client'}
+            conn = http.client.HTTPConnection(HOSTNAME)
+            conn.request(METHOD, ENDPOINT, None, headers)
 
             r1 = conn.getresponse()
             print('Response received: {}\n'.format(r1.status, r1.reason))
@@ -292,11 +299,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             DNAsequence_json = {}
             DNAsequence_json['DNAsequence'] = response['seq']
 
-            if 'json=1' in parameters:
-                json=1
+            if 'json=1' in self.path:
+                jsonvalue = 1
                 contents = json.dumps(DNAsequence_json)
             else:
-                json=0
+                jsonvalue = 0
 
                 contents = """
                               <html>
@@ -312,16 +319,22 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             gene_name = parameters['gene']
 
-            conn = http.client.HTTPConnection(SERVER, PORT)
-            conn.request("GET", "/homology/symbol/human/" + gene_name + "?content-type=application/json")
+            ENDPOINT = "/homology/symbol/human/" + gene_name + "?content-type=application/json"
+            headers = {'User-Agent': 'http-client'}
+            conn = http.client.HTTPConnection(HOSTNAME)
+            conn.request(METHOD, ENDPOINT, None, headers)
+
             r1 = conn.getresponse()
             print('Response received: {}\n'.format(r1.status, r1.reason))
             data1 = r1.read().decode('utf-8')
             response = json.loads(data1)
             id = response['data'][0]['id']
 
-            conn = http.client.HTTPConnection(HOSTNAME, PORT)
-            conn.request("GET", "/overlap/id/" + id + "?feature=gene;content-type=application/json")
+            ENDPOINT = "/overlap/id/" + id + "?feature=gene;content-type=application/json"
+            headers = {'User-Agent': 'http-client'}
+            conn = http.client.HTTPConnection(HOSTNAME)
+            conn.request(METHOD, ENDPOINT, None, headers)
+
             r1 = conn.getresponse()
             print('Response received: {}\n'.format(r1.status, r1.reason))
             data1 = r1.read().decode('utf-8')
@@ -332,23 +345,24 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             chromo = response1[0]['assembly_name']
 
             Features = {}
-            Features['start']= response1[0]['start']
+            Features['start'] = response1[0]['start']
             Features['end'] = response1[0]['end']
             Features['length'] = length
-            Features['chromo']= response1[0]['assembly_name']
+            Features['chromo'] = response1[0]['assembly_name']
+            Features['id'] = id
 
-            if 'json=1' in parameters:
-                json = 1
+            if 'json=1' in self.path:
+                jsonvalue = 1
                 contents = json.dumps(Features)
             else:
-                json = 0
+                jsonvalue = 0
 
                 contents = """
                                   <html>
                         <body style="background-color: lightgreen;">
                           <h1>Information about the Gene</h1>
-                            """ + 'Start:' + str(start) + 'End:' + str(end) + 'Length:' + str(
-                    length) + 'Chromosome:' + chromo + """
+                            """ + 'Start:' + str(start) + '\nEnd:' + str(end) + '\nLength:' + str(
+                    length) + '\nChromosome:' + chromo + '\nId:'+id+ """
                                   </body>
                                   </html>
                                   """
@@ -357,8 +371,10 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             gene_name = parameters['gene']
 
-            conn = http.client.HTTPConnection(HOSTNAME, PORT)
-            conn.request("GET", "/homology/symbol/human/" + gene_name + "?content-type=application/json")
+            ENDPOINT = "/homology/symbol/human/" + gene_name + "?content-type=application/json"
+            headers = {'User-Agent': 'http-client'}
+            conn = http.client.HTTPConnection(HOSTNAME)
+            conn.request(METHOD, ENDPOINT, None, headers)
 
             r1 = conn.getresponse()
             print('Response received: {}\n'.format(r1.status, r1.reason))
@@ -366,7 +382,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             response = json.loads(data1)
             id = response['data'][0]['id']
 
-            conn.request('GET', '/sequence/id/' + id + '?content-type=application/json')
+            ENDPOINT = "/sequence/id/" + id + "?content-type=application/json"
+            headers = {'User-Agent': 'http-client'}
+            conn = http.client.HTTPConnection(HOSTNAME)
+            conn.request(METHOD, ENDPOINT, None, headers)
+
             r1 = conn.getresponse()
             data1 = r1.read().decode('utf-8')
             response = json.loads(data1)
@@ -387,11 +407,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             Calculations['Perc_T']= perc_T
             Calculations['Perc_G']= perc_G
 
-            if 'json=1' in parameters:
-                json = 1
+            if 'json=1' in self.path:
+                jsonvalue = 1
                 contents = json.dumps(Calculations)
             else:
-                json = 0
+                jsonvalue = 0
 
                 contents = """
                                   <html>
@@ -413,34 +433,38 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             start = parameters['start']
             end = parameters['end']
 
-            conn = http.client.HTTPConnection(HOSTNAME, PORT)
-            conn.request(METHOD, "/overlap/region/human/" + str(chromo) + ":" + str(start) + "-" + str(
-                end) + "?content-type=application/json;feature=gene;feature=transcript;feature=cds;feature=exon")
+
+            ENDPOINT = "/overlap/region/human/" + str(chromo) + ":" + str(start) + "-" + str(end) + "?content-type=application/json;feature=gene;feature=transcript;feature=cds;feature=exon"
+            headers = {'User-Agent': 'http-client'}
+            conn = http.client.HTTPConnection(HOSTNAME)
+            conn.request(METHOD, ENDPOINT, None, headers)
+
             response = conn.getresponse()
             data = response.read().decode("utf-8")
             response2 = json.loads(data)
 
+            stop = int(end)-int(start)
+
             count = 0
             List = []
             for possiblegene in response2:
+                print(possiblegene)
                 if possiblegene['feature_type'] == 'gene':
-                    name = possiblegene['external_name']
-                    start = possiblegene['start']
-                    end = possiblegene['end']
-                    List.extend('Name:', name , 'Start:', start, 'End:', end)
+
+                    List.append(possiblegene['external_name'])
 
                     count = count + 1
-                    if int(count) == int(end - start):
+                    if count == stop:
                         break
 
             Dict = {}
             Dict['Gene'] = List
 
-            if 'json=1' in parameters:
-                json=1
+            if 'json=1' in self.path:
+                jsonvalue = 1
                 contents = json.dumps(Dict)
             else:
-                json=0
+                jsonvalue = 0
                 contents = """
                                                 <html>
                                       <body style="background-color: green;">
@@ -449,11 +473,10 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 count = 0
                 for possiblegene in response2:
                     if possiblegene['feature_type'] == 'gene':
-                        contents = contents + '<li>' + possiblegene['external_name'] + " " + str(
-                            possiblegene['start']) + " " + str(possiblegene['end']) + '</li>'
+                        contents = contents + '<li>' + possiblegene['external_name'] + '</li>'
                         count = count + 1
 
-                        if int(count) == int(end - start):
+                        if count == stop:
                             break
                 contents = contents + """
                                                 </ul>
@@ -469,7 +492,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # Generating the response message
         self.send_response(200)  # -- Status line: OK!
 
-        if json == 1:
+        if jsonvalue == 1:
             self.send_header('Content-Type', 'application/json')
 
         else:
