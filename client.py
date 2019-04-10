@@ -32,6 +32,10 @@ ENDPOINT = '/listSpecies?limit=&json=1'
 
 # -- Send the request. No body (None)
 # -- Use the defined headers
+
+
+#VERIFY
+
 conn.request(METHOD,ENDPOINT, None, headers)
 
 # -- Wait for the server's response
