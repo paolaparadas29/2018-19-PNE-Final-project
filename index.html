@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>FINAL PRACTICE</title>
+  </head>
+  <body style="background-color: pink;font-family:courier;">
+  <h1><center>Browsing Genomes</center></h1>
+
+    <p></p>
+    <form action="/listSpecies" method="get">
+         Limiting number of species:
+        <br>
+        Number of species: <input type="text" size="4" name="limit"><br>
+        JSON response:
+        <input type="checkbox" name="json" value="1">
+        <br>
+        <input type="submit" value="Different names with a limiting number">
+
+
+    </form>
+  <form action="/karyotype" method="get">
+      <br>
+         Information about the karyotype of a specie:
+      <br>
+        Name of the specie: <input type="text" size="20" name="specie"><br>
+      JSON response:
+        <input type="checkbox" name="json" value="1">
+        <br>
+        <input type="submit" value="Karyotype of the specific specie">
+
+  </form>
+
+  <form action="/chromosomeLenght" method="get">
+      <br>
+         Information about the length of a chromosome:
+        <br>
+         Name of the specie:<input type="text" size="20" name="specie"><br>
+         Name of the chromosome: <input type="text" size="20" name="chromo"><br>
+          JSON response:
+            <input type="checkbox" name="json" value="1">
+            <br>
+
+        <input type="submit" value="Lenght of the chromosome">
+  </form>
+
+  <form action="/geneSeq" method="get">
+      <br>
+         Information about the sequence of a given human gene:
+        <br>
+         Name of a human gene:<input type="text" size="20" name="gene"><br>
+        JSON response:
+        <input type="checkbox" name="json" value="1">
+        <br>
+        <input type="submit" value="Sequence">
+  </form>
+
+    <form action="/geneInfo" method="get">
+      <br>
+         Information about the start, end, length, id and chromosome of a given human gene:
+        <br>
+         Name of a human gene:<input type="text" size="20" name="gene"><br>
+        JSON response:
+        <input type="checkbox" name="json" value="1">
+        <br>
+        <input type="submit" value="Information">
+  </form>
+
+    <form action="/geneCal" method="get">
+      <br>
+         Information about the total length and the percentage of all its bases of a given human gene:
+        <br>
+         Name of a human gene:<input type="text" size="20" name="gene"><br>
+        JSON response:
+        <input type="checkbox" name="json" value="1">
+        <br>
+        <input type="submit" value="Length and Percentage">
+  </form>
+
+    <form action="/geneList" method="get">
+      <br>
+         Names of the genes of a given human chromosome:
+        <br>
+         Name of a human gene:<input type="text" size="20" name="chromo"><br>
+         Start position:<input type="text" size="20" name="start"><br>
+         End position:<input type="text" size="20" name="end"><br>
+        JSON response:
+        <input type="checkbox" name="json" value="1">
+        <br>
+        <input type="submit" value="Names of genes">
+  </form>
+  <center><img src="https://cdn1.eldia.com/052015/1484090829152.jpg"
+     width="400"
+     height="341"
+     title="A Chromosome"></center>
+  </body>
+</html>
