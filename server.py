@@ -1,5 +1,5 @@
 import socketserver
-#import termcolor
+import termcolor
 import http.server
 import http.client
 import json
@@ -32,7 +32,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         # Print the request line
 
-        #termcolor.cprint(self.requestline, 'green')
+        termcolor.cprint(self.requestline, 'green')
 
         # Selecting type
 
@@ -224,7 +224,6 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             name_specie = parameters['specie']
             name_chromo = parameters['chromo']
 
-
             # if 'specie' in parameters and 'chromo' in parameters:
 
             ENDPOINT = "/info/assembly/" + name_specie + "?"
@@ -339,10 +338,10 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             Features['chromo']= response1[0]['assembly_name']
 
             if 'json=1' in parameters:
-                json=1
+                json = 1
                 contents = json.dumps(Features)
             else:
-                json=0
+                json = 0
 
                 contents = """
                                   <html>
@@ -358,8 +357,6 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             gene_name = parameters['gene']
 
-            path = self.path.split('=')
-            gene_name = path[1]
             conn = http.client.HTTPConnection(HOSTNAME, PORT)
             conn.request("GET", "/homology/symbol/human/" + gene_name + "?content-type=application/json")
 
@@ -423,8 +420,6 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             data = response.read().decode("utf-8")
             response2 = json.loads(data)
 
-
-
             count = 0
             List = []
             for possiblegene in response2:
@@ -432,7 +427,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     name = possiblegene['external_name']
                     start = possiblegene['start']
                     end = possiblegene['end']
-                    List.extend('name:', name , 'start:', start, 'end:', end)
+                    List.extend('Name:', name , 'Start:', start, 'End:', end)
 
                     count = count + 1
                     if int(count) == int(end - start):
