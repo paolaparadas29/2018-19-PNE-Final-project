@@ -3,110 +3,173 @@ import termcolor
 import http.server
 import http.client
 import json
-
 from Seq import Seq
 
-# Define the server's port and hostname
+# Define the server's port, the hostname and method
 
 HOSTNAME = "rest.ensembl.org"
 METHOD = "GET"
 PORT = 8000
-SERVER = "rest.ensembl.org"
 
+
+# Class with our Handler. It is a called derived from BaseHTTPRequestHandler
 
 class TestHandler(http.server.BaseHTTPRequestHandler):
 
+    # A function which takes the path and create a dictionary with all the parameters needed to answer the request
     def convert_dict(self, path):
+
         dictionary = dict()
         keyvalue = path.split('?')[1]
         keyvalue = keyvalue.split(' ')[0]
-        list = keyvalue.split('&')
-        for keyandvalue in list:
+        listt = keyvalue.split('&')
+
+        for keyandvalue in listt:
             key = keyandvalue.split('=')[0]
             value = keyandvalue.split('=')[1]
             dictionary[key] = value
+
         return dictionary
 
+    # A method is called whenever the client invokes the GET method in the HTTP protocol request
     def do_GET(self):
-        """This method is called whenever the client invokes the GET method
-        in the HTTP protocol request"""
 
         # Print the request line
-
         termcolor.cprint(self.requestline, 'green')
 
-        # Selecting type
+        # Selecting type of resource that must be used to create the response to the client
 
         if self.path == '/':
+            # Whenever the resource '/' is selected, this part of the program is executed
             jsonvalue = 0
             contents = 'index.html'
+            # Open the file and read the content in the index
             with open(contents, 'r') as a:
                 contents = a.read()
                 a.close()
 
-        elif '/listSpecies?limit' in self.path:
-            parameters = self.convert_dict(self.path)
+        elif '/listSpecies' in self.path:
+            # Whenever the resource '/listSpecies' is selected, this part of the program is executed
 
-            try:
-                limit = parameters['limit']
+            # Condition to differentiate when a limit of species is requested and when it is not
+            if 'limit' in self.path:
 
-                ENDPOINT = "/info/species?content-type=application/json"
-                headers = {'User-Agent': 'http-client'}
-                conn = http.client.HTTPConnection(HOSTNAME)
-                conn.request(METHOD, ENDPOINT, None, headers)
-                r1 = conn.getresponse()
-                print()
-                print("Response received: ", end='')
-                print(r1.status, r1.reason)
-                text_json = r1.read().decode("utf-8")
-                conn.close()
+                # This try-catch is created to deal with Value or Type errors
+                try:
+                    # Create a variable of class Dict which contains the parameters needed to find
+                    # a proper response to the client
+                    parameters = self.convert_dict(self.path)
 
-                list1 = json.loads(text_json)
-                list_of_species = list1['species']
+                    # Using the key limit in the Dictionary -parameters- to assign that value to a variable
+                    limit = parameters['limit']
 
-            except ValueError:
+                    # Define the endpoint and the headers
+                    ENDPOINT = "/info/species?content-type=application/json"
+                    headers = {'User-Agent': 'http-client'}
 
-                ENDPOINT = "/info/species?content-type=application/json"
-                headers = {'User-Agent': 'http-client'}
-                conn = http.client.HTTPConnection(HOSTNAME)
-                conn.request(METHOD, ENDPOINT, None, headers)
-                r1 = conn.getresponse()
-                print()
-                print("Response received: ", end='')
-                print(r1.status, r1.reason)
-                text_json = r1.read().decode("utf-8")
-                conn.close()
+                    # Establishing connection to the Server
+                    conn = http.client.HTTPConnection(HOSTNAME)
+                    conn.request(METHOD, ENDPOINT, None, headers)
 
-                list1 = json.loads(text_json)
-                list_of_species = list1['species']
-                limit = len(list_of_species)
+                    # Get the response
+                    r1 = conn.getresponse()
 
+                    # Check The status of the response
+                    print()
+                    print("Response received: ", end='')
+                    print(r1.status, r1.reason)
 
-            except TypeError:
+                    # Decoding the response
+                    text_json = r1.read().decode("utf-8")
 
-                ENDPOINT = "/info/species?content-type=application/json"
-                headers = {'User-Agent': 'http-client'}
-                conn = http.client.HTTPConnection(HOSTNAME)
-                conn.request(METHOD, ENDPOINT, None, headers)
-                r1 = conn.getresponse()
-                print()
-                print("Response received: ", end='')
-                print(r1.status, r1.reason)
-                text_json = r1.read().decode("utf-8")
-                conn.close()
+                    # Closing the connection
+                    conn.close()
 
-                list1 = json.loads(text_json)
-                list_of_species = list1['species']
-                limit = len(list_of_species)
+                    # Creating a list from the response received
+                    list1 = json.loads(text_json)
 
-            if limit == '':
-                limit = len(list_of_species)
+                    #Creating a list with the species
+                    list_of_species = list1['species']
+
+                # This part of the code is executed whenever a type error arises
+                except TypeError:
+
+                    # Define the endpoint and the headers
+                    ENDPOINT = "/info/species?content-type=application/json"
+                    headers = {'User-Agent': 'http-client'}
+
+                    # Establishing connection to the Server
+                    conn = http.client.HTTPConnection(HOSTNAME)
+                    conn.request(METHOD, ENDPOINT, None, headers)
+
+                    # Get the response
+                    r1 = conn.getresponse()
+
+                    # Check The status of the response
+                    print()
+                    print("Response received: ", end='')
+                    print(r1.status, r1.reason)
+
+                    # Decoding the response
+                    text_json = r1.read().decode("utf-8")
+
+                    # Closing the connection
+                    conn.close()
+
+                    # Creating a list from the response received
+                    list1 = json.loads(text_json)
+
+                    # Creating a list with the species
+                    list_of_species = list1['species']
+
+                    # Assigning the value of the number of all the species to the variable limit to deal with this error
+                    limit = len(list_of_species)
+
+                # This try-catch deals with value errors
+                try:
+                    int(limit)
+                except ValueError:
+                    limit = len(list_of_species)
+
+            # Condition executed when the limit is not requested
             else:
-                limit = limit
+                # Define the endpoint and the headers
+                ENDPOINT = "/info/species?content-type=application/json"
+                headers = {'User-Agent': 'http-client'}
 
+                # Establishing connection to the Server
+                conn = http.client.HTTPConnection(HOSTNAME)
+                conn.request(METHOD, ENDPOINT, None, headers)
+
+                # Get the response
+                r1 = conn.getresponse()
+
+                # Check The status of the response
+                print()
+                print("Response received: ", end='')
+                print(r1.status, r1.reason)
+
+                # Decoding the response
+                text_json = r1.read().decode("utf-8")
+
+                # Closing the connection
+                conn.close()
+
+                # Creating a list from the response received
+                list1 = json.loads(text_json)
+
+                # Creating a list with the species
+                list_of_species = list1['species']
+
+                # Assigning the value of the number of all the species to the variable limit to deal with this error
+                limit = len(list_of_species)
+
+
+            # Define a counter and an list which after the loop will contain the names of the species
             count = 0
             List = []
 
+            # Loop for going over the list of species and taking their names until the limit has been reached
             for one in list_of_species:
                 specie = one['name']
                 List.append(specie)
@@ -115,43 +178,31 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 if int(count) == int(limit):
                     break
 
+            #Creating a dictionary which contains the name of the species
             Dict = {}
             Dict['List_of_species'] = List
 
+            # Loop to decide whether to send a json or a html file depending if the parameter json=1 was selected or not
             if 'json=1' in self.path:
+
+                # Assigning a value to the variable 'jsonvalue'
+                # which then will be used to decide what content type should be sent in the headers
                 jsonvalue = 1
+
+                # Converting in text json the dictionary 'Dict' and assigning it to the variable 'contents'
                 contents = json.dumps(Dict)
+
             else:
+                # Assigning a value to the variable 'jsonvalue'
+                # which then will be used to decide what content type should be sent in the headers
                 jsonvalue = 0
 
-                if int(limit) <= len(list_of_species):
-
-                    contents = """
-                                <html>
-                      <body style="background-color: green;">
-                        <h1>List of all species</h1>
-                                <ul>"""
-                    count = 0
-                    for one in list_of_species:
-                        contents = contents + '<li>' + one['name'] + '</li>'
-                        count = count + 1
-
-                        if int(count) == int(limit):
-                            break
-                    contents = contents + """
-                                </ul>
-                                </body>
-                                </html>
-                                """
-
-                else:
-                    limit = len(list_of_species)
-
-                    contents = """
-                                                    <html>
-                                          <body style="background-color: green;">
-                                            <h1>List of all species</h1>
-                                                    <ul>"""
+                # Creating a html text with the name of the species and assigning it to the variable 'contents'
+                contents = """
+                            <html>
+                  <body style="background-color: green;">
+                    <h1>List of all species</h1>
+                            <ul>"""
                 count = 0
                 for one in list_of_species:
                     contents = contents + '<li>' + one['name'] + '</li>'
@@ -160,12 +211,16 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     if int(count) == int(limit):
                         break
                 contents = contents + """
-                                                </ul>
-                                                </body>
-                                                </html>
-                                                """
+                            </ul>
+                            </body>
+                            </html>
+                            """
 
         elif '/karyotype' in self.path:
+            # Whenever the resource '/listSpecies' is selected, this part of the program is executed
+
+            # Create a variable of class Dict which contains the parameters needed to find
+            # a proper response to the client
             parameters = self.convert_dict(self.path)
 
             try:
@@ -220,11 +275,13 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         elif '/chromosomeLenght' in self.path:
 
+            # Create a variable of class Dict which contains the parameters needed to find
+            # a proper response to the client
             parameters = self.convert_dict(self.path)
 
-            parameter={}
-            parameter['name_specie']= parameters['specie']
-            parameter['name_chromo']= parameters['chromo']
+            parameter = {}
+            parameter['name_specie'] = parameters['specie']
+            parameter['name_chromo'] = parameters['chromo']
 
             name_specie = parameters['specie']
             name_chromo = parameters['chromo']
@@ -274,11 +331,14 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                                 """
 
         elif "/geneSeq" in self.path:
+
+            # Create a variable of class Dict which contains the parameters needed to find
+            # a proper response to the client
             parameters = self.convert_dict(self.path)
 
             gene_name = parameters['gene']
 
-            ENDPOINT = "/homology/symbol/human/"+gene_name+"?content-type=application/json"
+            ENDPOINT = "/homology/symbol/human/" + gene_name + "?content-type=application/json"
             headers = {'User-Agent': 'http-client'}
             conn = http.client.HTTPConnection(HOSTNAME)
             conn.request(METHOD, ENDPOINT, None, headers)
@@ -315,6 +375,9 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                               """
 
         elif "/geneInfo" in self.path:
+
+            # Create a variable of class Dict which contains the parameters needed to find
+            # a proper response to the client
             parameters = self.convert_dict(self.path)
 
             gene_name = parameters['gene']
@@ -362,11 +425,14 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                         <body style="background-color: lightgreen;">
                           <h1>Information about the Gene</h1>
                             """ + 'Start:' + str(start) + '\nEnd:' + str(end) + '\nLength:' + str(
-                    length) + '\nChromosome:' + chromo + '\nId:'+id+ """
+                    length) + '\nChromosome:' + chromo + '\nId:' + id + """
                                   </body>
                                   </html>
                                   """
         elif '/geneCal' in self.path:
+
+            # Create a variable of class Dict which contains the parameters needed to find
+            # a proper response to the client
             parameters = self.convert_dict(self.path)
 
             gene_name = parameters['gene']
@@ -401,11 +467,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             perc_G = seq.perc('G')
 
             Calculations = {}
-            Calculations['length']= length
-            Calculations['Perc_A']= perc_A
-            Calculations['Perc_c']= perc_C
-            Calculations['Perc_T']= perc_T
-            Calculations['Perc_G']= perc_G
+            Calculations['length'] = length
+            Calculations['Perc_A'] = perc_A
+            Calculations['Perc_c'] = perc_C
+            Calculations['Perc_T'] = perc_T
+            Calculations['Perc_G'] = perc_G
 
             if 'json=1' in self.path:
                 jsonvalue = 1
@@ -427,14 +493,17 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                                   """
 
         elif '/geneList' in self.path:
+
+            # Create a variable of class Dict which contains the parameters needed to find
+            # a proper response to the client
             parameters = self.convert_dict(self.path)
 
             chromo = parameters['chromo']
             start = parameters['start']
             end = parameters['end']
 
-
-            ENDPOINT = "/overlap/region/human/" + str(chromo) + ":" + str(start) + "-" + str(end) + "?content-type=application/json;feature=gene;feature=transcript;feature=cds;feature=exon"
+            ENDPOINT = "/overlap/region/human/" + str(chromo) + ":" + str(start) + "-" + str(
+                end) + "?content-type=application/json;feature=gene;feature=transcript;feature=cds;feature=exon"
             headers = {'User-Agent': 'http-client'}
             conn = http.client.HTTPConnection(HOSTNAME)
             conn.request(METHOD, ENDPOINT, None, headers)
@@ -443,7 +512,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             data = response.read().decode("utf-8")
             response2 = json.loads(data)
 
-            stop = int(end)-int(start)
+            stop = int(end) - int(start)
 
             count = 0
             List = []
@@ -468,7 +537,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 contents = """
                                                 <html>
                                       <body style="background-color: green;">
-                                        <h1>Information of Each Gene</h1>
+                                        <h1>Name of Each Gene</h1>
                                                 <ul>"""
                 count = 0
                 for possiblegene in response2:
@@ -493,6 +562,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         self.send_response(200)  # -- Status line: OK!
 
         if jsonvalue == 1:
+            # Define the content-type header:
             self.send_header('Content-Type', 'application/json')
 
         else:
