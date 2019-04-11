@@ -6,7 +6,6 @@ import json
 from Seq import Seq
 
 # Define the server's port, the hostname and method
-
 HOSTNAME = "rest.ensembl.org"
 METHOD = "GET"
 PORT = 8000
@@ -19,11 +18,13 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
     # A function which takes the path and create a dictionary with all the parameters needed to answer the request
     def convert_dict(self, path):
 
+        # Creating a dictionary with the different parameters contain in the path
         dictionary = dict()
         keyvalue = path.split('?')[1]
         keyvalue = keyvalue.split(' ')[0]
         listt = keyvalue.split('&')
 
+        # Loop for iterating over the different values in the list 'listt' to fill the dictionary
         for keyandvalue in listt:
             key = keyandvalue.split('=')[0]
             value = keyandvalue.split('=')[1]
@@ -39,8 +40,9 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         # Selecting type of resource that must be used to create the response to the client
 
+        # Whenever the resource '/' is selected, this part of the program is executed
         if self.path == '/':
-            # Whenever the resource '/' is selected, this part of the program is executed
+
             jsonvalue = 0
             contents = 'index.html'
             # Open the file and read the content in the index
@@ -48,8 +50,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 contents = a.read()
                 a.close()
 
+        # Whenever the resource '/listSpecies' is selected, this part of the program is executed
         elif '/listSpecies' in self.path:
-            # Whenever the resource '/listSpecies' is selected, this part of the program is executed
 
             # Condition to differentiate when a limit of species is requested and when it is not
             if 'limit' in self.path:
@@ -60,7 +62,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     # a proper response to the client
                     parameters = self.convert_dict(self.path)
 
-                    # Using the key limit in the Dictionary -parameters- to assign that value to a variable
+                    # Using the key 'limit' in the Dictionary 'parameters' to assign that value to the variable 'limit'
                     limit = parameters['limit']
 
                     # Define the endpoint and the headers
@@ -85,10 +87,10 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     # Closing the connection
                     conn.close()
 
-                    # Creating a list from the response received
+                    # Creating a dictionary from the response received
                     list1 = json.loads(text_json)
 
-                    #Creating a list with the species
+                    # Creating a list with the species
                     list_of_species = list1['species']
 
                 # This part of the code is executed whenever a type error arises
@@ -155,7 +157,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 # Closing the connection
                 conn.close()
 
-                # Creating a list from the response received
+                # Creating a dictionary from the response received
                 list1 = json.loads(text_json)
 
                 # Creating a list with the species
@@ -216,30 +218,45 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                             </html>
                             """
 
+        # Whenever the resource '/listSpecies' is selected, this part of the program is executed
         elif '/karyotype' in self.path:
-            # Whenever the resource '/listSpecies' is selected, this part of the program is executed
+
 
             # Create a variable of class Dict which contains the parameters needed to find
             # a proper response to the client
             parameters = self.convert_dict(self.path)
 
+            # This try-catch deals with key errors
             try:
-                a = parameters['specie']
+                # Using the key 'specie' in the Dictionary -parameters- to assign that value to the variable 'name'
+                name = parameters['specie']
 
-                ENDPOINT = "/info/assembly/" + a + "?"
-
+                # Define the endpoint and the headers
+                ENDPOINT = "/info/assembly/" + name + "?"
                 headers = {'Content-Type': 'application/json'}
+
+                # Establishing connection to the Server
                 conn = http.client.HTTPConnection(HOSTNAME)
                 conn.request(METHOD, ENDPOINT, None, headers)
+
+                # Get the response
                 r1 = conn.getresponse()
 
+                # Check The status of the response
                 print()
                 print("Response received: ", end='')
                 print(r1.status, r1.reason)
+
+                # Decoding the response
                 text_json = r1.read().decode("utf-8")
+
+                # Closing the connection
                 conn.close()
 
+                # Creating a dictionary from the response received
                 response = json.loads(text_json)
+
+
                 karyotype = response['karyotype']
                 karyotype_specie = {}
                 karyotype_specie['karyotype'] = response['karyotype']
@@ -272,8 +289,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                             </body>
                             </html>
                             """
-
-        elif '/chromosomeLenght' in self.path:
+        # Whenever the resource '/chromosomeLength' is selected, this part of the program is executed
+        elif '/chromosomeLength' in self.path:
 
             # Create a variable of class Dict which contains the parameters needed to find
             # a proper response to the client
@@ -283,19 +300,32 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             parameter['name_specie'] = parameters['specie']
             parameter['name_chromo'] = parameters['chromo']
 
+            # Using the key 'specie' in the Dictionary -parameters- to assign that value to the variable 'name_specie'
             name_specie = parameters['specie']
+            # Using the key 'chromo' in the Dictionary -parameters- to assign that value to the variable 'name_chromo'
             name_chromo = parameters['chromo']
 
-            # if 'specie' in parameters and 'chromo' in parameters:
-
+            # Define the endpoint and the headers
             ENDPOINT = "/info/assembly/" + name_specie + "?"
             headers = {'Content-Type': 'application/json'}
+
+            # Establishing connection to the Server
             conn = http.client.HTTPConnection(HOSTNAME)
             conn.request(METHOD, ENDPOINT, None, headers)
+
+            # Get the response
             r1 = conn.getresponse()
 
+            # Check The status of the response
             print('Response received: {}\n'.format(r1.status, r1.reason))
+
+            # Decoding the response
             data1 = r1.read().decode('utf-8')
+
+            # Closing the connection
+            conn.close()
+
+
             response = json.loads(data1)
 
             if 'json=1' in self.path:
@@ -329,29 +359,46 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                                 </body>
                                 </html>
                                 """
-
+        # Whenever the resource '/geneSeq' is selected, this part of the program is executed
         elif "/geneSeq" in self.path:
 
             # Create a variable of class Dict which contains the parameters needed to find
             # a proper response to the client
             parameters = self.convert_dict(self.path)
 
+            # Using the key 'gene' in the Dictionary -parameters- to assign that value to the variable 'gene_name'
             gene_name = parameters['gene']
 
+            # Define the endpoint and the headers
             ENDPOINT = "/homology/symbol/human/" + gene_name + "?content-type=application/json"
             headers = {'User-Agent': 'http-client'}
+
+            # Establishing connection to the Server
             conn = http.client.HTTPConnection(HOSTNAME)
             conn.request(METHOD, ENDPOINT, None, headers)
 
+            # Get the response
             r1 = conn.getresponse()
+
+            # Check The status of the response
             print('Response received: {}\n'.format(r1.status, r1.reason))
             data1 = r1.read().decode('utf-8')
             response = json.loads(data1)
             id = response['data'][0]['id']
 
+            # Establishing connection to the Server
             conn.request('GET', '/sequence/id/' + id + '?content-type=application/json')
+
+            # Get the response
             r1 = conn.getresponse()
+
+            # Decoding the response
             data1 = r1.read().decode('utf-8')
+
+            # Closing the connection
+            conn.close()
+
+            # Creating a dictionary from the response received
             response = json.loads(data1)
 
             DNAsequence = response['seq']
@@ -373,35 +420,59 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                               </body>
                               </html>
                               """
-
+        # Whenever the resource '/geneInfo' is selected, this part of the program is executed
         elif "/geneInfo" in self.path:
 
             # Create a variable of class Dict which contains the parameters needed to find
             # a proper response to the client
             parameters = self.convert_dict(self.path)
 
+            # Using the key 'gene' in the Dictionary -parameters- to assign that value to the variable 'gene_name'
             gene_name = parameters['gene']
 
+            # Define the endpoint and the headers
             ENDPOINT = "/homology/symbol/human/" + gene_name + "?content-type=application/json"
             headers = {'User-Agent': 'http-client'}
+
+            # Establishing connection to the Server
             conn = http.client.HTTPConnection(HOSTNAME)
             conn.request(METHOD, ENDPOINT, None, headers)
 
+            # Get the response
             r1 = conn.getresponse()
+
+            # Check The status of the response
             print('Response received: {}\n'.format(r1.status, r1.reason))
+
+            # Decoding the response
             data1 = r1.read().decode('utf-8')
             response = json.loads(data1)
             id = response['data'][0]['id']
 
+            # Define the endpoint and the headers
             ENDPOINT = "/overlap/id/" + id + "?feature=gene;content-type=application/json"
             headers = {'User-Agent': 'http-client'}
+
+            # Establishing connection to the Server
             conn = http.client.HTTPConnection(HOSTNAME)
             conn.request(METHOD, ENDPOINT, None, headers)
 
+            # Get the response
             r1 = conn.getresponse()
+
+            # Check The status of the response
             print('Response received: {}\n'.format(r1.status, r1.reason))
+
+            # Decoding the response
             data1 = r1.read().decode('utf-8')
+
+            # Closing the connection
+            conn.close()
+
+            # Creating a dictionary from the response received
             response1 = json.loads(data1)
+
+
             start = response1[0]['start']
             end = response1[0]['end']
             length = end - start
@@ -429,32 +500,56 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                                   </body>
                                   </html>
                                   """
+        # Whenever the resource '/geneCal' is selected, this part of the program is executed
         elif '/geneCal' in self.path:
 
             # Create a variable of class Dict which contains the parameters needed to find
             # a proper response to the client
             parameters = self.convert_dict(self.path)
 
+            # Using the key 'gene' in the Dictionary -parameters- to assign that value to the variable 'gene_name'
             gene_name = parameters['gene']
 
+            # Define the endpoint and the headers
             ENDPOINT = "/homology/symbol/human/" + gene_name + "?content-type=application/json"
             headers = {'User-Agent': 'http-client'}
+
+            # Establishing connection to the Server
             conn = http.client.HTTPConnection(HOSTNAME)
             conn.request(METHOD, ENDPOINT, None, headers)
 
+            # Get the response
             r1 = conn.getresponse()
+
+            # Check The status of the response
             print('Response received: {}\n'.format(r1.status, r1.reason))
+
+            # Decoding the response
             data1 = r1.read().decode('utf-8')
+
+            # Closing the connection
+            conn.close()
+
+            # Creating a dictionary from the response received
             response = json.loads(data1)
             id = response['data'][0]['id']
 
+            # Define the endpoint and the headers
             ENDPOINT = "/sequence/id/" + id + "?content-type=application/json"
             headers = {'User-Agent': 'http-client'}
+
+            # Establishing connection to the Server
             conn = http.client.HTTPConnection(HOSTNAME)
             conn.request(METHOD, ENDPOINT, None, headers)
 
+            # Get the response
             r1 = conn.getresponse()
+
+            # Check The status of the response
+            print('Response received: {}\n'.format(r1.status, r1.reason))
+
             data1 = r1.read().decode('utf-8')
+
             response = json.loads(data1)
 
             DNAsequence = response['seq']
@@ -491,25 +586,43 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                                   </body>
                                   </html>
                                   """
-
+        # Whenever the resource '/geneList' is selected, this part of the program is executed
         elif '/geneList' in self.path:
 
             # Create a variable of class Dict which contains the parameters needed to find
             # a proper response to the client
             parameters = self.convert_dict(self.path)
 
+            # Using the key 'chromo' in the Dictionary -parameters- to assign that value to the variable 'chromo'
             chromo = parameters['chromo']
+
+            # Using the key 'start' in the Dictionary -parameters- to assign that value to the variable 'start'
             start = parameters['start']
+
+            # Using the key 'end' in the Dictionary -parameters- to assign that value to the variable 'end'
             end = parameters['end']
 
-            ENDPOINT = "/overlap/region/human/" + str(chromo) + ":" + str(start) + "-" + str(
-                end) + "?content-type=application/json;feature=gene;feature=transcript;feature=cds;feature=exon"
+            # Define the endpoint and the headers
+            ENDPOINT = "/overlap/region/human/" + str(chromo) + ":" + str(start) + "-" + str(end) + "?content-type=application/json;feature=gene;feature=transcript;feature=cds;feature=exon"
             headers = {'User-Agent': 'http-client'}
+
+            # Establishing connection to the Server
             conn = http.client.HTTPConnection(HOSTNAME)
             conn.request(METHOD, ENDPOINT, None, headers)
 
+            # Get the response
             response = conn.getresponse()
+
+            # Check The status of the response
+            print('Response received: {}\n'.format(response.status, response.reason))
+
+            # Decoding the response
             data = response.read().decode("utf-8")
+
+            # Closing the connection
+            conn.close()
+
+
             response2 = json.loads(data)
 
             stop = int(end) - int(start)
@@ -552,6 +665,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                                                 </body>
                                                 </html>
                                                 """
+
+        # Whenever the resource none of the above resources is selected, this part of the program is executed
         else:
             contents = 'error.html'
             with open(contents, 'r') as a:
@@ -561,6 +676,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # Generating the response message
         self.send_response(200)  # -- Status line: OK!
 
+        # Creating a loop to choose what 'content type' in headers should be added
         if jsonvalue == 1:
             # Define the content-type header:
             self.send_header('Content-Type', 'application/json')
@@ -591,7 +707,9 @@ with socketserver.TCPServer(("", PORT), Handler) as httpd:
     print("Serving at PORT", PORT)
 
     # -- Main loop: Attend the client. Whenever there is a new
-    # -- clint, the handler is called
+    # -- client, the handler is called
+
+    # Try-catch to deal with KeyboardInterrupt errors
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
