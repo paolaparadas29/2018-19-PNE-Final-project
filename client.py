@@ -1,82 +1,83 @@
 import http.client
 import json
 
-# -- API information + method + port
-HOSTNAME = "localhost"
-METHOD = "GET"
 PORT = 8000
+SERVER = 'localhost'
 
+# This part of the client check if when json=1 is selected, the endpoint /listSpecies works properly
 
-def convert_dict(self, path):
-    dictionary = dict()
-    keyvalue = path.split('?')[1]
-    keyvalue = keyvalue.split(' ')[0]
-    list = keyvalue.split('&')
-    for keyandvalue in list:
-        key = keyandvalue.split('=')[0]
-        value = keyandvalue.split('=')[1]
-        dictionary[key] = value
-    return dictionary
-
-
-# -- Here we can define special headers if needed
-headers = {'User-Agent': 'http-client'}
-
-# -- Connect to the server
-# -- NOTICE it is an HTTPS connection!
-# -- If we do not specify the port, the standard one
-# -- will be used
-conn = http.client.HTTPSConnection(HOSTNAME)
-
-ENDPOINT = '/listSpecies?limit=&json=1'
-
-# -- Send the request. No body (None)
-# -- Use the defined headers
-
-
-#VERIFY
-
-conn.request(METHOD,ENDPOINT, None, headers)
-
-# -- Wait for the server's response
+conn = http.client.HTTPConnection(SERVER, PORT)
+conn.request("GET", "/listSpecies?limit=10&json=1")
 r1 = conn.getresponse()
+print('Response received: {}\n'.format(r1.status, r1.reason))
+data1 = r1.read().decode('utf-8')
+response = json.loads(data1)
+conn.close()
+print(response)
 
-# -- Print the status
-print()
-print("Response received: ", end='')
-print(r1.status, r1.reason)
+# This part of the client check if when json=1 is selected, the endpoint /karyotype works properly
 
-# -- Read the response's body and close
-# -- the connection
-text_json = r1.read().decode("utf-8")
+conn = http.client.HTTPConnection(SERVER, PORT)
+conn.request("GET", "/karyotype?specie=human&json=1")
+r1 = conn.getresponse()
+print('Response received: {}\n'.format(r1.status, r1.reason))
+data1 = r1.read().decode('utf-8')
+response = json.loads(data1)
+conn.close()
+print(response)
+
+# This part of the client check if when json=1 is selected, the endpoint /chromosomeLenght works properly
+
+conn = http.client.HTTPConnection(SERVER, PORT)
+conn.request("GET", "/chromosomeLenght?specie=human&chromo=2&json=1")
+r1 = conn.getresponse()
+print('Response received: {}\n'.format(r1.status, r1.reason))
+data1 = r1.read().decode('utf-8')
+response = json.loads(data1)
+conn.close()
+print(response)
+
+# This part of the client check if when json=1 is selected, the endpoint /geneSeq works properly
+
+conn = http.client.HTTPConnection(SERVER, PORT)
+conn.request("GET", "/geneSeq?gene=FRAT1&json=1")
+r1 = conn.getresponse()
+print('Response received: {}\n'.format(r1.status, r1.reason))
+data1 = r1.read().decode('utf-8')
+response = json.loads(data1)
+conn.close()
+print(response)
+
+# This part of the client check if when json=1 is selected, the endpoint /geneInfo works properly
+
+conn = http.client.HTTPConnection(SERVER, PORT)
+conn.request("GET", "/geneInfo?gene=FRAT1&json=1")
+r1 = conn.getresponse()
+print('Response received: {}\n'.format(r1.status, r1.reason))
+data1 = r1.read().decode('utf-8')
+response = json.loads(data1)
+conn.close()
+print(response)
 
 
-parameters = self.convert_dict(self.path)
-limit = parameters['limit']
+# This part of the client check if when json=1 is selected, the endpoint /geneCal works properly
 
-# -- Optionally you can print the
-# -- received json file for testing
-# print(text_json)
+conn = http.client.HTTPConnection(SERVER, PORT)
+conn.request("GET", "/geneCal?gene=FRAT1&json=1")
+r1 = conn.getresponse()
+print('Response received: {}\n'.format(r1.status, r1.reason))
+data1 = r1.read().decode('utf-8')
+response = json.loads(data1)
+conn.close()
+print(response)
 
-# -- Generate the object from the json file
-listSpecies = json.loads(text_json)
+# This part of the client check if when json=1 is selected, the endpoint /geneList works properly
 
-list_of_species = list1['species']
-
-# -- Get the data
-count = 0
-List = []
-
-for one in list_of_species:
-    specie = one['name']
-    List.append(specie)
-    count = count + 1
-
-    if int(count) == int(limit):
-        break
-
-Dict = {}
-Dict['List_of_species'] = List
-
-contents = json.dumps(Dict)
-print(contents)
+conn = http.client.HTTPConnection(SERVER, PORT)
+conn.request("GET", "/geneList?chromo=1&start=0&end=30000&json=1")
+r1 = conn.getresponse()
+print('Response received: {}\n'.format(r1.status, r1.reason))
+data1 = r1.read().decode('utf-8')
+response = json.loads(data1)
+conn.close()
+print(response)
