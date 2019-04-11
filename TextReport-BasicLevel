@@ -70,9 +70,9 @@ output:                               <html>
                             </body>
                             </html>
 
-*/chromosomeLenght:
+*/chromosomeLength:
 
-input:    http://localhost:8000/chromosomeLenght?specie=mouse&chromo=10
+input:    http://localhost:8000/chromosomeLength?specie=mouse&chromo=10
 output:
                             <html>
                   <body style="background-color: pink;">
@@ -81,7 +81,7 @@ output:
                             </body>
                             </html>
 
-input:    http://localhost:8000/chromosomeLenght?specie=human&chromo=X
+input:    http://localhost:8000/chromosomeLength?specie=human&chromo=X
 output:
                             <html>
                   <body style="background-color: pink;">
