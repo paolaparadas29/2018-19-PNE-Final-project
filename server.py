@@ -19,18 +19,18 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
     def convert_dict(self, path):
 
         # Creating a dictionary with the different parameters contain in the path
-        dictionary = dict()
+        Dict = dict()
         keyvalue = path.split('?')[1]
         keyvalue = keyvalue.split(' ')[0]
         listt = keyvalue.split('&')
 
         # Loop for iterating over the different values in the list 'listt' to fill the dictionary
         for keyandvalue in listt:
-            key = keyandvalue.split('=')[0]
-            value = keyandvalue.split('=')[1]
-            dictionary[key] = value
+            name_parameter = keyandvalue.split('=')[0]
+            value_parameter = keyandvalue.split('=')[1]
+            Dict[name_parameter] = value_parameter
 
-        return dictionary
+        return Dict
 
     # A method is called whenever the client invokes the GET method in the HTTP protocol request
     def do_GET(self):
@@ -42,10 +42,14 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         # Whenever the resource '/' is selected, this part of the program is executed
         if self.path == '/':
-
+            # Assigning a value to the variable 'jsonvalue'
+            # which then will be used to decide what content type should be sent in the headers
             jsonvalue = 0
+
+            # Assigning to the variable contents the name of the 'index.html' file
             contents = 'index.html'
-            # Open the file and read the content in the index
+
+            # Open the file and read the content in 'index.html'
             with open(contents, 'r') as a:
                 contents = a.read()
                 a.close()
@@ -60,10 +64,10 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 try:
                     # Create a variable of class Dict which contains the parameters needed to find
                     # a proper response to the client
-                    parameters = self.convert_dict(self.path)
+                    keyandvalue = self.convert_dict(self.path)
 
-                    # Using the key 'limit' in the Dictionary 'parameters' to assign that value to the variable 'limit'
-                    limit = parameters['limit']
+                    # Using the key 'limit' in the Dictionary 'keyandvalue' to assign that value to the variable 'limit'
+                    limit = keyandvalue['limit']
 
                     # Define the endpoint and the headers
                     ENDPOINT = "/info/species?content-type=application/json"
@@ -88,10 +92,10 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     conn.close()
 
                     # Creating a dictionary from the response received
-                    list1 = json.loads(text_json)
+                    data1 = json.loads(text_json)
 
                     # Creating a list with the species
-                    list_of_species = list1['species']
+                    species = data1['species']
 
                 # This part of the code is executed whenever a type error arises
                 except TypeError:
@@ -119,19 +123,19 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     conn.close()
 
                     # Creating a list from the response received
-                    list1 = json.loads(text_json)
+                    data1 = json.loads(text_json)
 
                     # Creating a list with the species
-                    list_of_species = list1['species']
+                    species = data1['species']
 
                     # Assigning the value of the number of all the species to the variable limit to deal with this error
-                    limit = len(list_of_species)
+                    limit = len(species)
 
                 # This try-catch deals with value errors
                 try:
                     int(limit)
                 except ValueError:
-                    limit = len(list_of_species)
+                    limit = len(species)
 
             # Condition executed when the limit is not requested
             else:
@@ -158,21 +162,20 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 conn.close()
 
                 # Creating a dictionary from the response received
-                list1 = json.loads(text_json)
+                data1 = json.loads(text_json)
 
                 # Creating a list with the species
-                list_of_species = list1['species']
+                species = data1['species']
 
                 # Assigning the value of the number of all the species to the variable limit to deal with this error
-                limit = len(list_of_species)
+                limit = len(species)
 
-
-            # Define a counter and an list which after the loop will contain the names of the species
+            # Define a counter and an list which after going over the loop will contain the names of the species
             count = 0
             List = []
 
             # Loop for going over the list of species and taking their names until the limit has been reached
-            for one in list_of_species:
+            for one in species:
                 specie = one['name']
                 List.append(specie)
                 count = count + 1
@@ -180,9 +183,9 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 if int(count) == int(limit):
                     break
 
-            #Creating a dictionary which contains the name of the species
+            # Creating a dictionary which contains the name of the species
             Dict = {}
-            Dict['List_of_species'] = List
+            Dict['Species'] = List
 
             # Loop to decide whether to send a json or a html file depending if the parameter json=1 was selected or not
             if 'json=1' in self.path:
@@ -206,7 +209,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     <h1>List of all species</h1>
                             <ul>"""
                 count = 0
-                for one in list_of_species:
+                for one in species:
                     contents = contents + '<li>' + one['name'] + '</li>'
                     count = count + 1
 
@@ -221,15 +224,14 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # Whenever the resource '/listSpecies' is selected, this part of the program is executed
         elif '/karyotype' in self.path:
 
-
             # Create a variable of class Dict which contains the parameters needed to find
             # a proper response to the client
-            parameters = self.convert_dict(self.path)
+            keyandvalue = self.convert_dict(self.path)
 
             # This try-catch deals with key errors
             try:
-                # Using the key 'specie' in the Dictionary -parameters- to assign that value to the variable 'name'
-                name = parameters['specie']
+                # Using the key 'specie' in the Dictionary 'keyandvalue' to assign that value to the variable 'name'
+                name = keyandvalue['specie']
 
                 # Define the endpoint and the headers
                 ENDPOINT = "/info/assembly/" + name + "?"
@@ -256,17 +258,30 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 # Creating a dictionary from the response received
                 response = json.loads(text_json)
 
-
+                # Using the key 'karyotype' to assign that value to the variable 'karyotype'
                 karyotype = response['karyotype']
-                karyotype_specie = {}
-                karyotype_specie['karyotype'] = response['karyotype']
 
+                # Creating a dictionary which contains the karyotype of the specie
+                Dict = {}
+                Dict['karyotype'] = response['karyotype']
+
+                # Loop to decide whether to send a json or a html file depending
+                # if the parameter json=1 was selected or not
                 if 'json=1' in self.path:
+
+                    # Assigning a value to the variable 'jsonvalue'
+                    # which then will be used to decide what content type should be sent in the headers
                     jsonvalue = 1
-                    contents = json.dumps(karyotype_specie)
+
+                    # Converting in text json the dictionary 'Dict' and assigning it to the variable 'contents'
+                    contents = json.dumps(Dict)
+
                 else:
+                    # Assigning a value to the variable 'jsonvalue'
+                    # which then will be used to decide what content type should be sent in the headers
                     jsonvalue = 0
 
+                    # Creating a html text with the karyotype of the specie and assigning it to the variable 'contents'
                     contents = """
                                 <html>
                       <body style="background-color: lightblue;">
@@ -280,8 +295,13 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                                 </body>
                                 </html>
                                 """
-
             except KeyError:
+                # Assigning a value to the variable 'jsonvalue'
+                # which then will be used to decide what content type should be sent in the headers
+                jsonvalue = 0
+
+                # Creating a html text with 'Invalid name' to indicate that the name chosen it's not in available
+                # and assigning it to the variable 'contents'
                 contents = """
                             <html>
                   <body style="background-color: lightblue;">
@@ -294,16 +314,17 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             # Create a variable of class Dict which contains the parameters needed to find
             # a proper response to the client
-            parameters = self.convert_dict(self.path)
+            keyandvalue = self.convert_dict(self.path)
 
-            parameter = {}
-            parameter['name_specie'] = parameters['specie']
-            parameter['name_chromo'] = parameters['chromo']
+            # Creating a dictionary which contains the name of the species and the name of the chromosome
+            Dict = {}
+            Dict['name_specie'] = keyandvalue['specie']
+            Dict['name_chromo'] = keyandvalue['chromo']
 
-            # Using the key 'specie' in the Dictionary -parameters- to assign that value to the variable 'name_specie'
-            name_specie = parameters['specie']
-            # Using the key 'chromo' in the Dictionary -parameters- to assign that value to the variable 'name_chromo'
-            name_chromo = parameters['chromo']
+            # Using the key 'specie' in the Dictionary 'keyandvalue' to assign that value to the variable 'name_specie'
+            name_specie = keyandvalue['specie']
+            # Using the key 'chromo' in the Dictionary 'keyandvalue' to assign that value to the variable 'name_chromo'
+            name_chromo = keyandvalue['chromo']
 
             # Define the endpoint and the headers
             ENDPOINT = "/info/assembly/" + name_specie + "?"
@@ -325,19 +346,32 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             # Closing the connection
             conn.close()
 
-
+            # Creating a dictionary from the response received
             response = json.loads(data1)
 
+            # Loop to decide whether to send a json or a html file depending if the parameter json=1 was selected or not
             if 'json=1' in self.path:
+
+                # Assigning a value to the variable 'jsonvalue'
+                # which then will be used to decide what content type should be sent in the headers
                 jsonvalue = 1
-                contents = json.dumps(parameter)
+
+                # Converting in text json the dictionary 'Dict' and assigning it to the variable 'contents'
+                contents = json.dumps(Dict)
+
             else:
+                # Assigning a value to the variable 'jsonvalue'
+                # which then will be used to decide what content type should be sent in the headers
                 jsonvalue = 0
 
+                # Creating a try-catch to deal with Key errors
                 try:
 
+                    # Using the key 'top_level_region' in the Dictionary 'parameters'
+                    # to assign that value to the variable 'response'
                     response = response['top_level_region']
 
+                    # Creating a html text with the length of the chromosome and assigning it to the variable 'contents'
                     contents = """
                                 <html>
                       <body style="background-color: pink;">
@@ -352,6 +386,9 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                                 </html>
                                 """
                 except KeyError:
+
+                    # Creating a html text with 'Invalid name' to indicate that the name chosen it's not in available
+                    # and assigning it to the variable 'contents'
                     contents = """
                                 <html>
                       <body style="background-color: lightblue;">
@@ -359,15 +396,16 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                                 </body>
                                 </html>
                                 """
+
         # Whenever the resource '/geneSeq' is selected, this part of the program is executed
         elif "/geneSeq" in self.path:
 
             # Create a variable of class Dict which contains the parameters needed to find
             # a proper response to the client
-            parameters = self.convert_dict(self.path)
+            keyandvalue = self.convert_dict(self.path)
 
-            # Using the key 'gene' in the Dictionary -parameters- to assign that value to the variable 'gene_name'
-            gene_name = parameters['gene']
+            # Using the key 'gene' in the Dictionary 'keyandvalue' to assign that value to the variable 'gene_name'
+            gene_name = keyandvalue['gene']
 
             # Define the endpoint and the headers
             ENDPOINT = "/homology/symbol/human/" + gene_name + "?content-type=application/json"
@@ -382,8 +420,18 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             # Check The status of the response
             print('Response received: {}\n'.format(r1.status, r1.reason))
+
+            # Decoding the response
             data1 = r1.read().decode('utf-8')
+
+            # Closing the connection
+            conn.close()
+
+            # Creating a dictionary from the response received
             response = json.loads(data1)
+
+            # Using the key 'data', indexing in the first position, and using the key 'id'
+            # to assign that value to the variable 'id'
             id = response['data'][0]['id']
 
             # Establishing connection to the Server
@@ -401,17 +449,29 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             # Creating a dictionary from the response received
             response = json.loads(data1)
 
+            # Using the key 'seq' to assign that value to the variable 'DNAsequence'
             DNAsequence = response['seq']
 
-            DNAsequence_json = {}
-            DNAsequence_json['DNAsequence'] = response['seq']
+            # Creating a dictionary which contains the sequence of DNA
+            Dict = {}
+            Dict['DNAsequence'] = response['seq']
 
+            # Loop to decide whether to send a json or a html file depending if the parameter json=1 was selected or not
             if 'json=1' in self.path:
+
+                # Assigning a value to the variable 'jsonvalue'
+                # which then will be used to decide what content type should be sent in the headers
                 jsonvalue = 1
-                contents = json.dumps(DNAsequence_json)
+
+                # Converting in text json the dictionary 'Dict' and assigning it to the variable 'contents'
+                contents = json.dumps(Dict)
+
             else:
+                # Assigning a value to the variable 'jsonvalue'
+                # which then will be used to decide what content type should be sent in the headers
                 jsonvalue = 0
 
+                # Creating a html text with the sequence of DNA and assigning it to the variable 'contents'
                 contents = """
                               <html>
                     <body style="background-color: lightgreen;">
@@ -425,10 +485,10 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             # Create a variable of class Dict which contains the parameters needed to find
             # a proper response to the client
-            parameters = self.convert_dict(self.path)
+            keyandvalue = self.convert_dict(self.path)
 
-            # Using the key 'gene' in the Dictionary -parameters- to assign that value to the variable 'gene_name'
-            gene_name = parameters['gene']
+            # Using the key 'gene' in the Dictionary 'keyandvalue' to assign that value to the variable 'gene_name'
+            gene_name = keyandvalue['gene']
 
             # Define the endpoint and the headers
             ENDPOINT = "/homology/symbol/human/" + gene_name + "?content-type=application/json"
@@ -446,11 +506,19 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             # Decoding the response
             data1 = r1.read().decode('utf-8')
+
+            # Closing the connection
+            conn.close()
+
+            # Creating a dictionary from the response received
             response = json.loads(data1)
-            id = response['data'][0]['id']
+
+            # Using the key 'data', indexing in the first position, and using the key 'id'
+            # to assign that value to the variable 'id'
+            idd = response['data'][0]['id']
 
             # Define the endpoint and the headers
-            ENDPOINT = "/overlap/id/" + id + "?feature=gene;content-type=application/json"
+            ENDPOINT = "/overlap/id/" + idd + "?feature=gene;content-type=application/json"
             headers = {'User-Agent': 'http-client'}
 
             # Establishing connection to the Server
@@ -472,31 +540,46 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             # Creating a dictionary from the response received
             response1 = json.loads(data1)
 
-
+            # Indexing in the first position and using the key 'start' to assign that value to the variable 'start'
             start = response1[0]['start']
+            # Indexing in the first position and using the key 'end' to assign that value to the variable 'end'
             end = response1[0]['end']
+            # Subtracting the end-start to know the length and assigning that value to the variable 'length'
             length = end - start
+            # Using the key 'assembly_name' in the Dictionary 'parameters' to assign that value to the variable 'chromo'
             chromo = response1[0]['assembly_name']
 
+            # Creating a dictionary which contains the name, start, end, and length of the chromosome
             Features = {}
             Features['start'] = response1[0]['start']
             Features['end'] = response1[0]['end']
             Features['length'] = length
             Features['chromo'] = response1[0]['assembly_name']
-            Features['id'] = id
+            Features['id'] = idd
 
+            # Loop to decide whether to send a json or a html file depending if the parameter json=1 was selected or not
             if 'json=1' in self.path:
+
+                # Assigning a value to the variable 'jsonvalue'
+                # which then will be used to decide what content type should be sent in the headers
                 jsonvalue = 1
+
+                # Converting in text json the dictionary 'Dict' and assigning it to the variable 'contents'
                 contents = json.dumps(Features)
+
             else:
+                # Assigning a value to the variable 'jsonvalue'
+                # which then will be used to decide what content type should be sent in the headers
                 jsonvalue = 0
 
+                # Creating a html text with the starting, ending, length, name of the chromosome and id of a gene
+                # and assigning it to the variable 'contents'
                 contents = """
                                   <html>
                         <body style="background-color: lightgreen;">
                           <h1>Information about the Gene</h1>
                             """ + 'Start:' + str(start) + '\nEnd:' + str(end) + '\nLength:' + str(
-                    length) + '\nChromosome:' + chromo + '\nId:' + id + """
+                    length) + '\nChromosome:' + chromo + '\nId:' + idd + """
                                   </body>
                                   </html>
                                   """
@@ -505,10 +588,10 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             # Create a variable of class Dict which contains the parameters needed to find
             # a proper response to the client
-            parameters = self.convert_dict(self.path)
+            keyandvalue = self.convert_dict(self.path)
 
-            # Using the key 'gene' in the Dictionary -parameters- to assign that value to the variable 'gene_name'
-            gene_name = parameters['gene']
+            # Using the key 'gene' in the Dictionary 'keyandvalue' to assign that value to the variable 'gene_name'
+            gene_name = keyandvalue['gene']
 
             # Define the endpoint and the headers
             ENDPOINT = "/homology/symbol/human/" + gene_name + "?content-type=application/json"
@@ -532,10 +615,13 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             # Creating a dictionary from the response received
             response = json.loads(data1)
-            id = response['data'][0]['id']
+
+            # Using the key 'data', indexing in the first position, and using the key 'id'
+            # to assign that value to the variable 'id'
+            idd = response['data'][0]['id']
 
             # Define the endpoint and the headers
-            ENDPOINT = "/sequence/id/" + id + "?content-type=application/json"
+            ENDPOINT = "/sequence/id/" + idd + "?content-type=application/json"
             headers = {'User-Agent': 'http-client'}
 
             # Establishing connection to the Server
@@ -548,19 +634,28 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             # Check The status of the response
             print('Response received: {}\n'.format(r1.status, r1.reason))
 
+            # Decoding the response
             data1 = r1.read().decode('utf-8')
 
+            # Creating a dictionary from the response received
             response = json.loads(data1)
 
+            # Using the key 'seq' to assign that value to the variable 'DNAsequence'
             DNAsequence = response['seq']
 
+            # Creating an object of class Seq
             seq = Seq(DNAsequence)
+
+            # Measuring the len of the sequence and assigning that value to the variable 'length'
             length = len(DNAsequence)
+
+            # Calculating the percentage od each base using the class Seq
             perc_A = seq.perc('A')
             perc_C = seq.perc('C')
             perc_T = seq.perc('T')
             perc_G = seq.perc('G')
 
+            # Creating a dictionary which contains the length of the sequence and the percentage of each base
             Calculations = {}
             Calculations['length'] = length
             Calculations['Perc_A'] = perc_A
@@ -568,21 +663,31 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             Calculations['Perc_T'] = perc_T
             Calculations['Perc_G'] = perc_G
 
+            # Loop to decide whether to send a json or a html file depending if the parameter json=1 was selected or not
             if 'json=1' in self.path:
+
+                # Assigning a value to the variable 'jsonvalue'
+                # which then will be used to decide what content type should be sent in the headers
                 jsonvalue = 1
+
+                # Converting in text json the dictionary 'Dict' and assigning it to the variable 'contents'
                 contents = json.dumps(Calculations)
+
             else:
+                # Assigning a value to the variable 'jsonvalue'
+                # which then will be used to decide what content type should be sent in the headers
                 jsonvalue = 0
 
+                # Creating a html text with the length, and percentage of each base of a gene
+                # and assigning it to the variable 'contents'
                 contents = """
                                   <html>
                         <body style="background-color: lightgreen;">
                           <h1>Total Lenght and Percentage of each Base</h1>
                             """ + 'Lenght' + str(length) + '<br>' + "Percentage of A's" + \
-                           str(perc_A) + '<br>' + "Percentage of C's" + str(
-                    perc_C) + '<br>' + "Percentage of T's" + str(
-                    perc_T) \
-                           + '<br>' + "Percentage of G's: " + str(perc_G) + """
+                           str(perc_A) + '<br>' + "Percentage of C's" + str(perc_C) + '<br>' + "Percentage of T's" + str(
+                    perc_T) + '<br>' + "Percentage of G's: " + str(perc_G) +\
+                                    """
                                   </body>
                                   </html>
                                   """
@@ -591,16 +696,16 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             # Create a variable of class Dict which contains the parameters needed to find
             # a proper response to the client
-            parameters = self.convert_dict(self.path)
+            keyandvalue = self.convert_dict(self.path)
 
-            # Using the key 'chromo' in the Dictionary -parameters- to assign that value to the variable 'chromo'
-            chromo = parameters['chromo']
+            # Using the key 'chromo' in the Dictionary 'keyandvalue' to assign that value to the variable 'chromo'
+            chromo = keyandvalue['chromo']
 
-            # Using the key 'start' in the Dictionary -parameters- to assign that value to the variable 'start'
-            start = parameters['start']
+            # Using the key 'start' in the Dictionary 'keyandvalue' to assign that value to the variable 'start'
+            start = keyandvalue['start']
 
-            # Using the key 'end' in the Dictionary -parameters- to assign that value to the variable 'end'
-            end = parameters['end']
+            # Using the key 'end' in the Dictionary 'keyandvalue' to assign that value to the variable 'end'
+            end = keyandvalue['end']
 
             # Define the endpoint and the headers
             ENDPOINT = "/overlap/region/human/" + str(chromo) + ":" + str(start) + "-" + str(end) + "?content-type=application/json;feature=gene;feature=transcript;feature=cds;feature=exon"
@@ -622,15 +727,19 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             # Closing the connection
             conn.close()
 
-
+            # Creating a dictionary from the response received
             response2 = json.loads(data)
 
+            # Creating a variable which determine when the loop should break
             stop = int(end) - int(start)
 
+            # Define a counter and an list which after going over the loop will contain the names of the genes
             count = 0
             List = []
+
+            # Loop for going over the list of possible genes and taking their names until the limit has been reached
             for possiblegene in response2:
-                print(possiblegene)
+
                 if possiblegene['feature_type'] == 'gene':
 
                     List.append(possiblegene['external_name'])
@@ -639,14 +748,27 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     if count == stop:
                         break
 
+            # Creating a dictionary which contains the names of the genes in a precise segment of a chromosome
             Dict = {}
             Dict['Gene'] = List
 
+            # Loop to decide whether to send a json or a html file depending if the parameter json=1 was selected or not
             if 'json=1' in self.path:
+
+                # Assigning a value to the variable 'jsonvalue'
+                # which then will be used to decide what content type should be sent in the headers
                 jsonvalue = 1
+
+                # Converting in text json the dictionary 'Dict' and assigning it to the variable 'contents'
                 contents = json.dumps(Dict)
+
             else:
+                # Assigning a value to the variable 'jsonvalue'
+                # which then will be used to decide what content type should be sent in the headers
                 jsonvalue = 0
+
+                # Creating a html text with the names of the genes located in a specific region in a chromosome
+                # and assigning it to the variable 'contents'
                 contents = """
                                                 <html>
                                       <body style="background-color: green;">
@@ -668,7 +790,14 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         # Whenever the resource none of the above resources is selected, this part of the program is executed
         else:
+            # Assigning a value to the variable 'jsonvalue'
+            # which then will be used to decide what content type should be sent in the headers
+            jsonvalue = 0
+
+            # Assigning to the variable contents the name of the 'error.html' file
             contents = 'error.html'
+
+            # Open the file and read its content
             with open(contents, 'r') as a:
                 contents = a.read()
                 a.close()
