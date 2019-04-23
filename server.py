@@ -1064,8 +1064,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                                       <html>
                             <body style="background-color: lightgreen;">
                               <h1>Total Lenght and Percentage of each Base</h1>
-                                """ + 'Lenght' + str(length) + '<br>' + "Percentage of A's" + str(perc_A) + '<br>' + \
-                               "Percentage of C's" + str(perc_C) + '<br>' + "Percentage of T's" + str(perc_T)\
+                                """ + 'Lenght: ' + str(length) + '<br>' + "Percentage of A's: " + str(perc_A) + '<br>' + \
+                               "Percentage of C's: " + str(perc_C) + '<br>' + "Percentage of T's: " + str(perc_T)\
                                + '<br>' + "Percentage of G's: " + str(perc_G) + """
                                   </body>
                                   </html>
