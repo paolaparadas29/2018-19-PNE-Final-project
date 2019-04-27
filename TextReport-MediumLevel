@@ -43,20 +43,20 @@ output:                                <html>
 input:    http://localhost:8000/geneCal?gene=FRAT1
 output:
                             <html>
-                        <body style="background-color: lightgreen;">
-                  <h1>Total Lenght and Percentage of each Base</h1>
-                    Lenght2649<br>Percentage of A's18.0<br>Percentage of C's30.2<br>Percentage of T's19.7<br>Percentage of G's: 32.0
+                    <body style="background-color: lightgreen;">
+                      <h1>Total Length and Percentage of each Base</h1>
+                        Length: 2649<br>Percentage of A's: 18.0%<br>Percentage of C's: 30.2%<br>Percentage of T's: 19.7%<br>Percentage of G's: 32.0%
                           </body>
                           </html>
 
-input:    http://localhost:8000/geneCal?gene=FRAT2
+input:    http://localhost:8000/geneCal?gene=KCNJ11
 output:
-                      <html>
-            <body style="background-color: lightgreen;">
-              <h1>Total Lenght and Percentage of each Base</h1>
-                Lenght2213<br>Percentage of A's18.5<br>Percentage of C's28.4<br>Percentage of T's21.3<br>Percentage of G's: 31.9
-                      </body>
-                      </html>
+               <html>
+        <body style="background-color: lightgreen;">
+          <h1>Total Length and Percentage of each Base</h1>
+            Length: 3473<br>Percentage of A's: 17.8%<br>Percentage of C's: 29.8%<br>Percentage of T's: 18.5%<br>Percentage of G's: 34.0%
+              </body>
+              </html>
 
 */geneList:
 
