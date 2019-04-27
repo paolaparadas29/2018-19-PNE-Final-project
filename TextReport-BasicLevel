@@ -75,17 +75,16 @@ output:                               <html>
 input:    http://localhost:8000/chromosomeLength?specie=mouse&chromo=10
 output:
                             <html>
-                  <body style="background-color: pink;">
+                    <body style="background-color: pink;">
                     <h1>Length of the Chromosome</h1>
-                            <li>130694993</li>
-                            </body>
-                            </html>
+                               130694993
+                                </body>
+                                </html>
 
 input:    http://localhost:8000/chromosomeLength?specie=human&chromo=X
-output:
-                            <html>
-                  <body style="background-color: pink;">
+output:                        <html>
+                    <body style="background-color: pink;">
                     <h1>Length of the Chromosome</h1>
-                            156040895
-                            </body>
-                            </html>
+                               156040895
+                                </body>
+                                </html>
