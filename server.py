@@ -842,7 +842,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 # Using the key 'assembly_name' in the Dictionary 'parameters' to assign that value
                 # to the variable 'chromo'
 
-                chromo = response1[0]['assembly_name']
+                chromo = response1[0]['seq_region_name']
 
                 # Creating a dictionary which contains the name, start, end, and length of the chromosome
 
@@ -854,7 +854,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
                 Features['length'] = length
 
-                Features['chromo'] = response1[0]['assembly_name']
+                Features['chromo'] = response1[0]['seq_region_name']
 
                 Features['id'] = idd
 
@@ -888,8 +888,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                                       <html>
                             <body style="background-color: lightgreen;">
                               <h1>Information about the Gene</h1>
-                                """ + 'Start:' + str(start) + '\nEnd:' + str(end) + '\nLength:' + str(
-                        length) + '\nChromosome:' + chromo + '\nId:' + idd + """
+                                """ + 'Start: ' + str(start) + '<br>' + 'End: ' + str(end) + '<br>' + 'Length: ' + \
+                               str(length) + '<br>' + 'Chromosome: ' + str(chromo) + '<br>' + 'Id: ' + idd + """
                                       </body>
                                       </html>
                                       """
