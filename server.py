@@ -472,14 +472,6 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
             try:
 
-                # Creating a dictionary which contains the name of the species and the name of the chromosome
-
-                Dict = {}
-
-                Dict['name_specie'] = keyandvalue['specie']
-
-                Dict['name_chromo'] = keyandvalue['chromo']
-
                 # Using the key 'specie' in the Dictionary 'keyandvalue' to assign that value
                 # to the variable 'name_specie'
 
@@ -522,6 +514,24 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
                 response = json.loads(data1)
 
+                # Using the key 'top_level_region' in the Dictionary 'parameters'
+
+                # to assign that value to the variable 'response'
+
+                response = response['top_level_region']
+
+                # Creating a loop to find the length of the chromosome
+
+                for number in response:
+
+                    if number['name'] == name_chromo:
+                        length = number['length']
+
+                # Creating a dictionary which contains the length of the chromosome
+
+                Dict = {}
+                Dict['length'] = length
+
                 # Loop to decide whether to send a json or a html file depending if the parameter json=1 was selected
 
                 if 'json=1' in self.path:
@@ -543,12 +553,6 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     # which then will be used to decide what content type should be sent in the headers
 
                     jsonvalue = 0
-
-                    # Using the key 'top_level_region' in the Dictionary 'parameters'
-
-                    # to assign that value to the variable 'response'
-
-                    response = response['top_level_region']
 
                     # Creating a html text with the length of the chromosome and assigning it to the variable 'contents'
 
@@ -1061,15 +1065,15 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     # and assigning it to the variable 'contents'
 
                     contents = """
-                                      <html>
-                            <body style="background-color: lightgreen;">
-                              <h1>Total Lenght and Percentage of each Base</h1>
-                                """ + 'Lenght: ' + str(length) + '<br>' + "Percentage of A's: " + str(perc_A) + '<br>' + \
-                               "Percentage of C's: " + str(perc_C) + '<br>' + "Percentage of T's: " + str(perc_T)\
-                               + '<br>' + "Percentage of G's: " + str(perc_G) + """
-                                  </body>
-                                  </html>
-                                  """
+                              <html>
+                    <body style="background-color: lightgreen;">
+                      <h1>Total Length and Percentage of each Base</h1>
+                        """ + 'Length: ' + str(length) + '<br>' + "Percentage of A's: " + str(perc_A) + '%' + '<br>' + \
+                        "Percentage of C's: " + str(perc_C) + '%' + '<br>' + "Percentage of T's: " + str(perc_T)\
+                        + '%' + '<br>' + "Percentage of G's: " + str(perc_G) + '%' + """
+                          </body>
+                          </html>
+                          """
 
             except KeyError:
 
