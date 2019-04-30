@@ -90,3 +90,19 @@ output:                        <html>
                                156040895
                                 </body>
                                 </html>
+
+* Another endpoint which doesn't exist
+
+input:   http://localhost:8000/chromedosomeLength?specie=mouse&chromo=10
+output:        <!DOCTYPE html>
+            <html lang="en" dir="ltr">
+              <head>
+                <meta charset="utf-8">
+                <title>Error</title>
+              </head>
+              <body style="background-color: red">
+                <h1>ERROR</h1>
+                <p>Error.... the resource is not found</p>
+                <br><a href="/">[Main]</a>
+              </body>
+            </html>
