@@ -1,5 +1,126 @@
 Endpoints:
 
+*/listSpecies:
+input:     http://localhost:8000/listSpecies?
+output:  <html>
+        <body style="background-color: green;">
+          <h1>List of all species</h1>
+                  <ul><li>cavia_aperea</li><li>chinchilla_lanigera</li><li>mesocricetus_auratus</li><li>gopherus_agassizii</li><li>mus_musculus_casteij</li><li>heterocephalus_glaber_female</li><li>esox_lucius</li><li>mustela_putorius_furo</li><li>mola_mola</li><li>oryzias_latipes</li><li>pundamilia_nyererei</li><li>anas_platyrhynchos</li><li>gasterosteus_aculeatus</li><li>latimeria_chalumnae</li><li>dipodomys_ordii</li><li>petromyzon_marinus</li><li>mus_caroli</li><li>microtus_ochrogaster</li><li>monodelphis_domestica</li><li>canis_familiaris</li><li>ornithorhynchus_anatinus</li><li>tursiops_truncatus</li><li>aotus_nancymaae</li><li>nomascus_leucogenys</li><li>fukomys_damarensis</li><li>pygocentrus_nattereri</li><li>felis_catus</li><li>callithrix_jacchus</li><li>monopterus_albus</li><li>jaculus_jaculus</li><li>lepisosteus_oculatus</li><li>mus_musculus_129s1svimj</li><li>rattus_norvegicus</li><li>macaca_mulatta</li><li>maylandia_zebra</li><li>equus_caballus</li><li>gorilla_gorilla</li><li>choloepus_hoffmanni</li><li>mus_musculus_dba2j</li><li>xiphophorus_maculatus</li><li>homo_sapiens</li><li>mus_musculus_cbaj</li><li>mus_pahari</li><li>mus_musculus_aj</li><li>loxodonta_africana</li><li>heterocephalus_glaber_male</li><li>papio_anubis</li><li>ovis_aries</li><li>mus_musculus_c57bl6nj</li><li>erinaceus_europaeus</li><li>oryzias_melastigma</li><li>mus_musculus_pwkphj</li><li>mus_musculus_c3hhej</li><li>anolis_carolinensis</li><li>poecilia_latipinna</li><li>mastacembelus_armatus</li><li>vicugna_pacos</li><li>sarcophilus_harrisii</li><li>saccharomyces_cerevisiae</li><li>meleagris_gallopavo</li><li>cynoglossus_semilaevis</li><li>labrus_bergylta</li><li>xenopus_tropicalis</li><li>cricetulus_griseus_crigri</li><li>pan_troglodytes</li><li>ictidomys_tridecemlineatus</li><li>mus_musculus_nodshiltj</li><li>nannospalax_galili</li><li>pan_paniscus</li><li>poecilia_mexicana</li><li>amphiprion_percula</li><li>cercocebus_atys</li><li>pongo_abelii</li><li>peromyscus_maniculatus_bairdii</li><li>sorex_araneus</li><li>mus_musculus_nzohlltj</li><li>anabas_testudineus</li><li>stegastes_partitus</li><li>scleropages_formosus</li><li>fundulus_heteroclitus</li><li>mus_musculus_akrj</li><li>ursus_americanus</li><li>chrysemys_picta_bellii</li><li>mus_spretus</li><li>kryptolebias_marmoratus</li><li>astatotilapia_calliptera</li><li>cyprinodon_variegatus</li><li>neolamprologus_brichardi</li><li>ailuropoda_melanoleuca</li><li>amphilophus_citrinellus</li><li>poecilia_formosa</li><li>acanthochromis_polyacanthus</li><li>dasypus_novemcinctus</li><li>gambusia_affinis</li><li>colobus_angolensis_palliatus</li><li>ciona_intestinalis</li><li>microcebus_murinus</li><li>taeniopygia_guttata</li><li>poecilia_reticulata</li><li>equus_asinus_asinus</li><li>mus_musculus_balbcj</li><li>cebus_capucinus</li><li>amphiprion_ocellaris</li><li>ciona_savignyi</li><li>danio_rerio</li><li>scophthalmus_maximus</li><li>macaca_fascicularis</li><li>haplochromis_burtoni</li><li>mus_musculus</li><li>macaca_nemestrina</li><li>paramormyrops_kingsleyae</li><li>hippocampus_comes</li><li>pteropus_vampyrus</li><li>procavia_capensis</li><li>phascolarctos_cinereus</li><li>periophthalmus_magnuspinnatus</li><li>saimiri_boliviensis_boliviensis</li><li>panthera_tigris_altaica</li><li>propithecus_coquereli</li><li>rhinopithecus_roxellana</li><li>cavia_porcellus</li><li>drosophila_melanogaster</li><li>mus_musculus_lpj</li><li>seriola_dumerili</li><li>mus_musculus_fvbnj</li><li>takifugu_rubripes</li><li>tetraodon_nigroviridis</li><li>echinops_telfairi</li><li>panthera_pardus</li><li>oryzias_latipes_hsok</li><li>oryzias_latipes_hni</li><li>capra_hircus</li><li>xiphophorus_couchianus</li><li>seriola_lalandi_dorsalis</li><li>caenorhabditis_elegans</li><li>octodon_degus</li><li>sus_scrofa</li><li>chlorocebus_sabaeus</li><li>otolemur_garnettii</li><li>ochotona_princeps</li><li>vulpes_vulpes</li><li>bos_taurus</li><li>sphenodon_punctatus</li><li>tupaia_belangeri</li><li>eptatretus_burgeri</li><li>ficedula_albicollis</li><li>notamacropus_eugenii</li><li>gadus_morhua</li><li>oryctolagus_cuniculus</li><li>mus_musculus_wsbeij</li><li>cricetulus_griseus_chok1gshd</li><li>mandrillus_leucophaeus</li><li>rhinopithecus_bieti</li><li>ictalurus_punctatus</li><li>myotis_lucifugus</li><li>carlito_syrichta</li><li>pelodiscus_sinensis</li><li>gallus_gallus</li><li>canis_lupus_dingo</li><li>oreochromis_niloticus</li><li>astyanax_mexicanus</li><li>ursus_maritimus</li>
+                  </ul>
+                  </body>
+                  </html>
+
+input:     http://localhost:8000/listSpecies
+output:                     <html>
+        <body style="background-color: green;">
+          <h1>List of all species</h1>
+                  <ul><li>ursus_maritimus</li><li>saccharomyces_cerevisiae</li><li>panthera_pardus</li><li>tupaia_belangeri</li><li>heterocephalus_glaber_female</li><li>seriola_lalandi_dorsalis</li><li>mesocricetus_auratus</li><li>fukomys_damarensis</li><li>mus_musculus_pwkphj</li><li>pan_troglodytes</li><li>poecilia_mexicana</li><li>ailuropoda_melanoleuca</li><li>canis_lupus_dingo</li><li>mus_musculus_c3hhej</li><li>heterocephalus_glaber_male</li><li>carlito_syrichta</li><li>sphenodon_punctatus</li><li>scophthalmus_maximus</li><li>felis_catus</li><li>xiphophorus_couchianus</li><li>mus_musculus_wsbeij</li><li>macaca_mulatta</li><li>loxodonta_africana</li><li>microcebus_murinus</li><li>phascolarctos_cinereus</li><li>sorex_araneus</li><li>monodelphis_domestica</li><li>neolamprologus_brichardi</li><li>dipodomys_ordii</li><li>bos_taurus</li><li>mastacembelus_armatus</li><li>equus_asinus_asinus</li><li>nannospalax_galili</li><li>mus_musculus_c57bl6nj</li><li>echinops_telfairi</li><li>paramormyrops_kingsleyae</li><li>gasterosteus_aculeatus</li><li>mus_musculus_lpj</li><li>colobus_angolensis_palliatus</li><li>mus_musculus_nzohlltj</li><li>oryzias_latipes_hsok</li><li>hippocampus_comes</li><li>mus_musculus_fvbnj</li><li>periophthalmus_magnuspinnatus</li><li>oryctolagus_cuniculus</li><li>panthera_tigris_altaica</li><li>labrus_bergylta</li><li>ciona_savignyi</li><li>amphiprion_ocellaris</li><li>ciona_intestinalis</li><li>mus_musculus_cbaj</li><li>cynoglossus_semilaevis</li><li>mus_pahari</li><li>stegastes_partitus</li><li>amphilophus_citrinellus</li><li>amphiprion_percula</li><li>ornithorhynchus_anatinus</li><li>oryzias_latipes</li><li>procavia_capensis</li><li>peromyscus_maniculatus_bairdii</li><li>astatotilapia_calliptera</li><li>petromyzon_marinus</li><li>cebus_capucinus</li><li>anabas_testudineus</li><li>lepisosteus_oculatus</li><li>propithecus_coquereli</li><li>myotis_lucifugus</li><li>scleropages_formosus</li><li>jaculus_jaculus</li><li>ictidomys_tridecemlineatus</li><li>xenopus_tropicalis</li><li>poecilia_formosa</li><li>sus_scrofa</li><li>callithrix_jacchus</li><li>vulpes_vulpes</li><li>octodon_degus</li><li>homo_sapiens</li><li>mustela_putorius_furo</li><li>vicugna_pacos</li><li>maylandia_zebra</li><li>acanthochromis_polyacanthus</li><li>sarcophilus_harrisii</li><li>pongo_abelii</li><li>cyprinodon_variegatus</li><li>mus_musculus_129s1svimj</li><li>ochotona_princeps</li><li>gallus_gallus</li><li>taeniopygia_guttata</li><li>rattus_norvegicus</li><li>choloepus_hoffmanni</li><li>otolemur_garnettii</li><li>oryzias_melastigma</li><li>mus_spretus</li><li>gadus_morhua</li><li>mus_musculus_nodshiltj</li><li>oryzias_latipes_hni</li><li>eptatretus_burgeri</li><li>dasypus_novemcinctus</li><li>macaca_fascicularis</li><li>mus_musculus_aj</li><li>mus_caroli</li><li>meleagris_gallopavo</li><li>mus_musculus_casteij</li><li>poecilia_reticulata</li><li>papio_anubis</li><li>anas_platyrhynchos</li><li>pelodiscus_sinensis</li><li>mus_musculus_dba2j</li><li>tetraodon_nigroviridis</li><li>mus_musculus_akrj</li><li>capra_hircus</li><li>gambusia_affinis</li><li>astyanax_mexicanus</li><li>ursus_americanus</li><li>mandrillus_leucophaeus</li><li>tursiops_truncatus</li><li>cercocebus_atys</li><li>caenorhabditis_elegans</li><li>ovis_aries</li><li>mus_musculus</li><li>ficedula_albicollis</li><li>pundamilia_nyererei</li><li>rhinopithecus_bieti</li><li>chrysemys_picta_bellii</li><li>ictalurus_punctatus</li><li>macaca_nemestrina</li><li>pan_paniscus</li><li>esox_lucius</li><li>takifugu_rubripes</li><li>cavia_porcellus</li><li>erinaceus_europaeus</li><li>pteropus_vampyrus</li><li>cavia_aperea</li><li>saimiri_boliviensis_boliviensis</li><li>fundulus_heteroclitus</li><li>danio_rerio</li><li>drosophila_melanogaster</li><li>chlorocebus_sabaeus</li><li>rhinopithecus_roxellana</li><li>latimeria_chalumnae</li><li>seriola_dumerili</li><li>equus_caballus</li><li>canis_familiaris</li><li>oreochromis_niloticus</li><li>xiphophorus_maculatus</li><li>poecilia_latipinna</li><li>mola_mola</li><li>gopherus_agassizii</li><li>kryptolebias_marmoratus</li><li>microtus_ochrogaster</li><li>gorilla_gorilla</li><li>cricetulus_griseus_chok1gshd</li><li>chinchilla_lanigera</li><li>nomascus_leucogenys</li><li>mus_musculus_balbcj</li><li>pygocentrus_nattereri</li><li>cricetulus_griseus_crigri</li><li>notamacropus_eugenii</li><li>monopterus_albus</li><li>anolis_carolinensis</li><li>aotus_nancymaae</li><li>haplochromis_burtoni</li>
+                  </ul>
+                  </body>
+                  </html>
+
+input:    http://localhost:8000/listSpecies?limit=10
+output:
+                            <html>
+                  <body style="background-color: green;">
+                    <h1>List of all species</h1>
+                            <ul><li>astatotilapia_calliptera</li><li>ictidomys_tridecemlineatus</li><li>kryptolebias_marmoratus</li><li>mus_musculus_c57bl6nj</li><li>chrysemys_picta_bellii</li><li>cebus_capucinus</li><li>ficedula_albicollis</li><li>anolis_carolinensis</li><li>takifugu_rubripes</li><li>microtus_ochrogaster</li>
+                            </ul>
+                            </body>
+                            </html>
+
+input:    http://localhost:8000/listSpecies?limit=1000
+output:
+                                           <html>
+                                  <body style="background-color: green;">
+                                    <h1>List of all species</h1>
+                                            <ul><li>mastacembelus_armatus</li><li>bos_taurus</li><li>monodelphis_domestica</li><li>dipodomys_ordii</li><li>neolamprologus_brichardi</li><li>equus_asinus_asinus</li><li>nannospalax_galili</li><li>mus_musculus_c57bl6nj</li><li>echinops_telfairi</li><li>sphenodon_punctatus</li><li>scophthalmus_maximus</li><li>felis_catus</li><li>mus_musculus_c3hhej</li><li>heterocephalus_glaber_male</li><li>carlito_syrichta</li><li>xiphophorus_couchianus</li><li>phascolarctos_cinereus</li><li>microcebus_murinus</li><li>sorex_araneus</li><li>macaca_mulatta</li><li>mus_musculus_wsbeij</li><li>loxodonta_africana</li><li>heterocephalus_glaber_female</li><li>seriola_lalandi_dorsalis</li><li>mus_musculus_pwkphj</li><li>mesocricetus_auratus</li><li>fukomys_damarensis</li><li>pan_troglodytes</li><li>poecilia_mexicana</li><li>ailuropoda_melanoleuca</li><li>canis_lupus_dingo</li><li>saccharomyces_cerevisiae</li><li>ursus_maritimus</li><li>panthera_pardus</li><li>tupaia_belangeri</li><li>scleropages_formosus</li><li>jaculus_jaculus</li><li>myotis_lucifugus</li><li>xenopus_tropicalis</li><li>poecilia_formosa</li><li>ictidomys_tridecemlineatus</li><li>callithrix_jacchus</li><li>vulpes_vulpes</li><li>octodon_degus</li><li>sus_scrofa</li><li>maylandia_zebra</li><li>homo_sapiens</li><li>mustela_putorius_furo</li><li>vicugna_pacos</li><li>astatotilapia_calliptera</li><li>petromyzon_marinus</li><li>peromyscus_maniculatus_bairdii</li><li>anabas_testudineus</li><li>cebus_capucinus</li><li>propithecus_coquereli</li><li>lepisosteus_oculatus</li><li>amphiprion_ocellaris</li><li>panthera_tigris_altaica</li><li>labrus_bergylta</li><li>ciona_savignyi</li><li>ciona_intestinalis</li><li>stegastes_partitus</li><li>amphilophus_citrinellus</li><li>mus_musculus_cbaj</li><li>cynoglossus_semilaevis</li><li>mus_pahari</li><li>procavia_capensis</li><li>amphiprion_percula</li><li>ornithorhynchus_anatinus</li><li>oryzias_latipes</li><li>gasterosteus_aculeatus</li><li>mus_musculus_lpj</li><li>paramormyrops_kingsleyae</li><li>mus_musculus_nzohlltj</li><li>oryzias_latipes_hsok</li><li>hippocampus_comes</li><li>colobus_angolensis_palliatus</li><li>mus_musculus_fvbnj</li><li>oryctolagus_cuniculus</li><li>periophthalmus_magnuspinnatus</li><li>meleagris_gallopavo</li><li>papio_anubis</li><li>anas_platyrhynchos</li><li>mus_musculus_casteij</li><li>poecilia_reticulata</li><li>pelodiscus_sinensis</li><li>mus_musculus_dba2j</li><li>tetraodon_nigroviridis</li><li>dasypus_novemcinctus</li><li>macaca_fascicularis</li><li>mus_musculus_aj</li><li>mus_caroli</li><li>otolemur_garnettii</li><li>oryzias_melastigma</li><li>choloepus_hoffmanni</li><li>gadus_morhua</li><li>mus_spretus</li><li>mus_musculus_nodshiltj</li><li>oryzias_latipes_hni</li><li>eptatretus_burgeri</li><li>acanthochromis_polyacanthus</li><li>cyprinodon_variegatus</li><li>mus_musculus_129s1svimj</li><li>sarcophilus_harrisii</li><li>pongo_abelii</li><li>gallus_gallus</li><li>ochotona_princeps</li><li>rattus_norvegicus</li><li>taeniopygia_guttata</li><li>mus_musculus_balbcj</li><li>nomascus_leucogenys</li><li>chinchilla_lanigera</li><li>pygocentrus_nattereri</li><li>notamacropus_eugenii</li><li>monopterus_albus</li><li>cricetulus_griseus_crigri</li><li>anolis_carolinensis</li><li>aotus_nancymaae</li><li>haplochromis_burtoni</li><li>canis_familiaris</li><li>seriola_dumerili</li><li>equus_caballus</li><li>xiphophorus_maculatus</li><li>oreochromis_niloticus</li><li>gopherus_agassizii</li><li>poecilia_latipinna</li><li>mola_mola</li><li>gorilla_gorilla</li><li>cricetulus_griseus_chok1gshd</li><li>kryptolebias_marmoratus</li><li>microtus_ochrogaster</li><li>pan_paniscus</li><li>esox_lucius</li><li>macaca_nemestrina</li><li>pteropus_vampyrus</li><li>cavia_aperea</li><li>takifugu_rubripes</li><li>cavia_porcellus</li><li>erinaceus_europaeus</li><li>drosophila_melanogaster</li><li>saimiri_boliviensis_boliviensis</li><li>fundulus_heteroclitus</li><li>danio_rerio</li><li>rhinopithecus_roxellana</li><li>latimeria_chalumnae</li><li>chlorocebus_sabaeus</li><li>capra_hircus</li><li>gambusia_affinis</li><li>astyanax_mexicanus</li><li>ursus_americanus</li><li>mus_musculus_akrj</li><li>cercocebus_atys</li><li>caenorhabditis_elegans</li><li>mandrillus_leucophaeus</li><li>tursiops_truncatus</li><li>ficedula_albicollis</li><li>pundamilia_nyererei</li><li>ovis_aries</li><li>mus_musculus</li><li>ictalurus_punctatus</li><li>rhinopithecus_bieti</li><li>chrysemys_picta_bellii</li>
+                                            </ul>
+                                            </body>
+                                            </html>
+
+input:    http://localhost:8000/listSpecies?limit=
+output:                     <html>
+                  <body style="background-color: green;">
+                    <h1>List of all species</h1>
+                            <ul><li>mesocricetus_auratus</li><li>homo_sapiens</li><li>monodelphis_domestica</li><li>amphiprion_percula</li><li>gadus_morhua</li><li>procavia_capensis</li><li>dasypus_novemcinctus</li><li>mola_mola</li><li>mus_musculus_c57bl6nj</li><li>ursus_maritimus</li><li>ornithorhynchus_anatinus</li><li>pteropus_vampyrus</li><li>scophthalmus_maximus</li><li>echinops_telfairi</li><li>aotus_nancymaae</li><li>marmota_marmota_marmota</li><li>urocitellus_parryii</li><li>xiphophorus_maculatus</li><li>oryzias_latipes_hsok</li><li>labrus_bergylta</li><li>esox_lucius</li><li>petromyzon_marinus</li><li>anabas_testudineus</li><li>cricetulus_griseus_crigri</li><li>maylandia_zebra</li><li>cricetulus_griseus_chok1gshd</li><li>meriones_unguiculatus</li><li>castor_canadensis</li><li>apteryx_owenii</li><li>neolamprologus_brichardi</li><li>xiphophorus_couchianus</li><li>mus_musculus_wsbeij</li><li>cyanistes_caeruleus</li><li>otolemur_garnettii</li><li>mus_musculus_cbaj</li><li>capra_hircus</li><li>rhinopithecus_roxellana</li><li>cynoglossus_semilaevis</li><li>macaca_nemestrina</li><li>poecilia_mexicana</li><li>heterocephalus_glaber_female</li><li>felis_catus</li><li>numida_meleagris</li><li>panthera_tigris_altaica</li><li>panthera_pardus</li><li>choloepus_hoffmanni</li><li>spermophilus_dauricus</li><li>poecilia_reticulata</li><li>mus_pahari</li><li>microcebus_murinus</li><li>astatotilapia_calliptera</li><li>vicugna_pacos</li><li>mandrillus_leucophaeus</li><li>junco_hyemalis</li><li>notamacropus_eugenii</li><li>bos_taurus</li><li>manacus_vitellinus</li><li>pan_troglodytes</li><li>sarcophilus_harrisii</li><li>microtus_ochrogaster</li><li>calidris_pygmaea</li><li>pygocentrus_nattereri</li><li>callithrix_jacchus</li><li>rattus_norvegicus</li><li>ciona_savignyi</li><li>jaculus_jaculus</li><li>erinaceus_europaeus</li><li>stegastes_partitus</li><li>monopterus_albus</li><li>hippocampus_comes</li><li>ailuropoda_melanoleuca</li><li>zonotrichia_albicollis</li><li>gasterosteus_aculeatus</li><li>gambusia_affinis</li><li>mus_spretus</li><li>sus_scrofa</li><li>haplochromis_burtoni</li><li>gopherus_agassizii</li><li>pan_paniscus</li><li>xenopus_tropicalis</li><li>saccharomyces_cerevisiae</li><li>mus_musculus_aj</li><li>mus_musculus_129s1svimj</li><li>seriola_dumerili</li><li>dromaius_novaehollandiae</li><li>astyanax_mexicanus</li><li>ciona_intestinalis</li><li>nomascus_leucogenys</li><li>mus_spicilegus</li><li>chelonoidis_abingdonii</li><li>ictalurus_punctatus</li><li>cebus_capucinus</li><li>chinchilla_lanigera</li><li>mus_musculus_nodshiltj</li><li>colobus_angolensis_palliatus</li><li>anolis_carolinensis</li><li>lonchura_striata_domestica</li><li>equus_caballus</li><li>octodon_degus</li><li>periophthalmus_magnuspinnatus</li><li>notechis_scutatus</li><li>drosophila_melanogaster</li><li>salvator_merianae</li><li>ictidomys_tridecemlineatus</li><li>vulpes_vulpes</li><li>cricetulus_griseus_picr</li><li>rhinopithecus_bieti</li><li>mus_musculus_c3hhej</li><li>mus_musculus_fvbnj</li><li>myotis_lucifugus</li><li>latimeria_chalumnae</li><li>oryzias_latipes_hni</li><li>chrysemys_picta_bellii</li><li>anas_platyrhynchos_platyrhynchos</li><li>coturnix_japonica</li><li>oryctolagus_cuniculus</li><li>prolemur_simus</li><li>apteryx_rowi</li><li>bos_mutus</li><li>mus_musculus_balbcj</li><li>loxodonta_africana</li><li>cyprinodon_variegatus</li><li>amphilophus_citrinellus</li><li>acanthochromis_polyacanthus</li><li>oreochromis_niloticus</li><li>sorex_araneus</li><li>paramormyrops_kingsleyae</li><li>ochotona_princeps</li><li>phascolarctos_cinereus</li><li>macaca_fascicularis</li><li>scleropages_formosus</li><li>tupaia_belangeri</li><li>propithecus_coquereli</li><li>anser_brachyrhynchus</li><li>caenorhabditis_elegans</li><li>mus_musculus_pwkphj</li><li>tursiops_truncatus</li><li>papio_anubis</li><li>calidris_pugnax</li><li>chlorocebus_sabaeus</li><li>bison_bison_bison</li><li>canis_familiaris</li><li>mus_musculus_akrj</li><li>serinus_canaria</li><li>meleagris_gallopavo</li><li>equus_asinus_asinus</li><li>mus_caroli</li><li>nothoprocta_perdicaria</li><li>apteryx_haastii</li><li>cercocebus_atys</li><li>heterocephalus_glaber_male</li><li>mus_musculus</li><li>amphiprion_ocellaris</li><li>parus_major</li><li>fukomys_damarensis</li><li>theropithecus_gelada</li><li>ovis_aries</li><li>seriola_lalandi_dorsalis</li><li>pogona_vitticeps</li><li>oryzias_melastigma</li><li>mus_musculus_lpj</li><li>gorilla_gorilla</li><li>ursus_americanus</li><li>oryzias_latipes</li><li>piliocolobus_tephrosceles</li><li>mus_musculus_dba2j</li><li>cavia_aperea</li><li>takifugu_rubripes</li><li>danio_rerio</li><li>lepidothrix_coronata</li><li>eptatretus_burgeri</li><li>taeniopygia_guttata</li><li>cavia_porcellus</li><li>pongo_abelii</li><li>melopsittacus_undulatus</li><li>carlito_syrichta</li><li>fundulus_heteroclitus</li><li>macaca_mulatta</li><li>mus_musculus_casteij</li><li>peromyscus_maniculatus_bairdii</li><li>dipodomys_ordii</li><li>canis_lupus_dingo</li><li>mastacembelus_armatus</li><li>pelodiscus_sinensis</li><li>pundamilia_nyererei</li><li>gallus_gallus</li><li>ficedula_albicollis</li><li>kryptolebias_marmoratus</li><li>mus_musculus_nzohlltj</li><li>lepisosteus_oculatus</li><li>neovison_vison</li><li>sphenodon_punctatus</li><li>saimiri_boliviensis_boliviensis</li><li>mustela_putorius_furo</li><li>tetraodon_nigroviridis</li><li>poecilia_formosa</li><li>poecilia_latipinna</li><li>nannospalax_galili</li><li>crocodylus_porosus</li>
+                            </ul>
+                            </body>
+                            </html>
+
+
+*/karyotype:
+
+input:    http://localhost:8000/karyotype?specie=human
+output:
+
+                            <html>
+                  <body style="background-color: lightblue;">
+                    <h1>Karyotype</h1>
+                            <ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>X</li><li>Y</li><li>MT</li>
+                            </ul>
+                            </body>
+                            </html>
+
+
+input:    http://localhost:8000/karyotype?specie=mouse
+output:                               <html>
+                  <body style="background-color: lightblue;">
+                    <h1>Karyotype</h1>
+                            <ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>X</li><li>Y</li><li>MT</li>
+                            </ul>
+                            </body>
+                            </html>
+
+*/chromosomeLength:
+
+input:    http://localhost:8000/chromosomeLength?specie=mouse&chromo=10
+output:
+                            <html>
+                    <body style="background-color: pink;">
+                    <h1>Length of the Chromosome</h1>
+                               130694993
+                                </body>
+                                </html>
+
+input:    http://localhost:8000/chromosomeLength?specie=human&chromo=X
+output:                        <html>
+                    <body style="background-color: pink;">
+                    <h1>Length of the Chromosome</h1>
+                               156040895
+                                </body>
+                                </html>
+
+* Another endpoints which don't exist
+
+input:   http://localhost:8000/chromedosomeLength?specie=mouse&chromo=10
+output:        <!DOCTYPE html>
+            <html lang="en" dir="ltr">
+              <head>
+                <meta charset="utf-8">
+                <title>Error</title>
+              </head>
+              <body style="background-color: red">
+                <h1>ERROR</h1>
+                <p>Error.... the resource is not found</p>
+                <br><a href="/">[Main]</a>
+              </body>
+            </html>
+
+input:    http://localhost:8000/listSergpecies?limit=12&json=1
+output:   <!DOCTYPE html>
+            <html lang="en" dir="ltr">
+              <head>
+                <meta charset="utf-8">
+                <title>Error</title>
+              </head>
+              <body style="background-color: red">
+                <h1>ERROR</h1>
+                <p>Error.... the resource is not found</p>
+                <br><a href="/">[Main]</a>
+              </body>
+            </html>
+
 */genSeq:
 
 input:     http://localhost:8000/geneSeq?gene=FRAT1
