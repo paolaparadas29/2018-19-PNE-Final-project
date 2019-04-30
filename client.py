@@ -27,6 +27,7 @@ conn.close()
 response = json.loads(data1)
 
 # Print JSON text
+print('Names of the species: ')
 print(response)
 
 # This part of the client check if when json=1 is selected, the endpoint /karyotype works properly
@@ -51,6 +52,7 @@ conn.close()
 response = json.loads(data1)
 
 # Print JSON text
+print('The karyotype: ')
 print(response)
 
 # This part of the client check if when json=1 is selected, the endpoint /chromosomeLenght works properly
@@ -75,6 +77,7 @@ conn.close()
 response = json.loads(data1)
 
 # Print JSON text
+print('The length: ')
 print(response)
 
 # This part of the client check if when json=1 is selected, the endpoint /geneSeq works properly
@@ -99,6 +102,7 @@ conn.close()
 response = json.loads(data1)
 
 # Print JSON text
+print('The DNA sequence: ')
 print(response)
 
 # This part of the client check if when json=1 is selected, the endpoint /geneInfo works properly
@@ -123,6 +127,7 @@ conn.close()
 response = json.loads(data1)
 
 # Print JSON text
+print('Information of about a gene: ')
 print(response)
 
 
@@ -148,6 +153,7 @@ conn.close()
 response = json.loads(data1)
 
 # Print JSON text
+print('Calculations: ')
 print(response)
 
 # This part of the client check if when json=1 is selected, the endpoint /geneList works properly
@@ -172,4 +178,5 @@ conn.close()
 response = json.loads(data1)
 
 # Print JSON text
+print('Names of the genes: ')
 print(response)
